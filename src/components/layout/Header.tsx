@@ -10,7 +10,7 @@ import { Logo } from '../ui/Logo'
 import { MobileMenu } from './MobileMenu'
 
 /** Pages dont le Hero plein écran passe sous le header. */
-const overlayRoutes = ['/', '/la-marque']
+const overlayRoutes = ['/', '/la-marque', '/collection']
 
 /** En deçà, la page est considérée « en haut » : header visible et transparent. */
 const topOffset = 10

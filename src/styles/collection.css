@@ -1,0 +1,1177 @@
+.collection-page {
+  --section-y: clamp(88px, 10vw, 168px);
+  --hairline: 4px;
+  /* Doré assombri : lisible en petit corps sur les fonds clairs. */
+  --label-on-light: color-mix(
+    in srgb,
+    var(--color-gold) 55%,
+    var(--color-brown)
+  );
+
+  width: 100%;
+  overflow: clip;
+  background: var(--color-ink);
+}
+
+/* Éléments éditoriaux partagés */
+
+.collection-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.collection-page img {
+  max-width: none;
+}
+
+.collection-manifesto__campaign-photo img,
+.collection-manifesto__photo--small img,
+.collection-frames__photo img,
+.collection-frames__finishes img,
+.collection-book__portrait img,
+.collection-summer__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hero — mobile et tablette : le film vertical occupe tout l'écran */
+
+.collection-hero {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 128px var(--gutter) 40px;
+  overflow: hidden;
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+
+.collection-hero__film {
+  position: absolute;
+  inset: 0;
+}
+
+.collection-hero__film-frame {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-ink);
+  will-change: transform;
+}
+
+.collection-hero__film video {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collection-hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      0deg,
+      rgb(23 23 17 / 94%) 0%,
+      rgb(23 23 17 / 62%) 42%,
+      rgb(23 23 17 / 0%) 76%
+    ),
+    linear-gradient(180deg, rgb(23 23 17 / 46%) 0%, rgb(23 23 17 / 0%) 22%);
+}
+
+.collection-hero__heading,
+.collection-hero__lead,
+.collection-hero__intro {
+  position: relative;
+  z-index: 2;
+}
+
+.collection-hero__eyebrow {
+  margin-bottom: 14px;
+  color: var(--color-ochre);
+}
+
+.collection-hero__title {
+  font-family: var(--font-editorial);
+  font-size: clamp(64px, 20vw, 168px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.84;
+  text-transform: uppercase;
+}
+
+.collection-hero__line {
+  display: block;
+  overflow: hidden;
+  padding-top: 0.08em;
+}
+
+.collection-hero__line > span {
+  display: block;
+}
+
+.collection-hero__chapter {
+  display: block;
+  margin-top: 18px;
+  color: var(--color-ochre);
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.34em;
+  line-height: 1.5;
+}
+
+.collection-hero__lead {
+  margin-top: 22px;
+  font-family: var(--font-editorial);
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.2;
+}
+
+.collection-hero__lead span {
+  display: block;
+}
+
+.collection-hero__intro {
+  margin-top: 18px;
+}
+
+.collection-hero__intro p {
+  max-width: 36ch;
+  color: rgb(245 232 210 / 86%);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.collection-hero__cta {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 0 26px;
+  border: 1px solid rgb(245 232 210 / 55%);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  gap: 14px;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 260ms ease,
+    border-color 260ms ease,
+    color 260ms ease;
+}
+
+.collection-hero__cta:hover {
+  border-color: var(--color-ochre);
+  background: var(--color-ochre);
+  color: var(--color-ink);
+}
+
+.collection-hero__cta svg {
+  transition: transform 260ms ease;
+}
+
+.collection-hero__cta:hover svg {
+  transform: translateY(3px);
+}
+
+.collection-hero__counter {
+  position: absolute;
+  z-index: 2;
+  top: 96px;
+  right: var(--gutter);
+  color: rgb(245 232 210 / 86%);
+}
+
+/* Hero — desktop : le film devient un objet vertical, le titre le traverse */
+
+@media (min-width: 1024px) {
+  .collection-hero {
+    display: block;
+    height: 100svh;
+    min-height: 680px;
+    padding: 0;
+  }
+
+  .collection-hero__film {
+    width: auto;
+    height: 64svh;
+    min-height: 430px;
+    aspect-ratio: 9 / 16;
+    inset: 50% auto auto 58%;
+    transform: translate(-50%, -47%);
+  }
+
+  .collection-hero__veil {
+    display: none;
+  }
+
+  .collection-hero__heading {
+    position: absolute;
+    top: 50%;
+    left: var(--gutter);
+    transform: translateY(-52%);
+  }
+
+  .collection-hero__eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .collection-hero__title {
+    font-size: clamp(110px, min(14.5vw, 23svh), 280px);
+  }
+
+  .collection-hero__lead {
+    position: absolute;
+    bottom: 48px;
+    left: var(--gutter);
+    margin: 0;
+    font-size: clamp(22px, 1.8vw, 30px);
+  }
+
+  .collection-hero__intro {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 48px;
+    width: min(300px, 22vw);
+    margin: 0;
+  }
+
+  .collection-hero__counter {
+    top: calc(50% - 30svh);
+  }
+}
+
+/* Chapter 01 — ouverture et manifeste */
+
+.collection-manifesto {
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+
+.collection-manifesto__opener {
+  display: grid;
+  padding: var(--section-y) var(--gutter) clamp(56px, 7vw, 112px);
+  row-gap: 40px;
+}
+
+.collection-manifesto__index {
+  display: grid;
+  align-content: start;
+  color: var(--color-ochre);
+  row-gap: 20px;
+}
+
+.collection-manifesto__numeral {
+  color: transparent;
+  font-family: var(--font-editorial);
+  font-size: clamp(120px, 17vw, 300px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.74;
+  -webkit-text-stroke: 1px var(--color-ochre);
+}
+
+.collection-manifesto__title {
+  font-family: var(--font-editorial);
+  font-size: clamp(38px, 6.2vw, 108px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.collection-manifesto__title > span {
+  display: block;
+  text-wrap: balance;
+}
+
+.collection-manifesto__title > span:nth-child(2) {
+  padding-left: 12%;
+}
+
+.collection-manifesto__title > span:nth-child(3) {
+  color: var(--color-ochre);
+}
+
+.collection-manifesto__campaign {
+  display: grid;
+  gap: var(--hairline);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.collection-manifesto__campaign-photo {
+  overflow: hidden;
+  aspect-ratio: 2 / 3;
+}
+
+.collection-manifesto__campaign-photo:nth-child(2) {
+  order: -1;
+  aspect-ratio: 4 / 5;
+  grid-column: 1 / -1;
+}
+
+.collection-manifesto__campaign-photo:nth-child(2) img {
+  object-position: 50% 62%;
+}
+
+.collection-manifesto__body {
+  display: grid;
+  padding: var(--section-y) var(--gutter);
+  background: var(--color-cream);
+  color: var(--color-ink);
+  row-gap: 56px;
+}
+
+.collection-manifesto__body .collection-label {
+  margin-bottom: 24px;
+  color: var(--label-on-light);
+}
+
+.collection-manifesto__lede {
+  max-width: 30ch;
+  color: var(--color-primary);
+  font-family: var(--font-editorial);
+  font-size: clamp(26px, 2.5vw, 42px);
+  line-height: 1.18;
+}
+
+.collection-manifesto__photo--large {
+  margin-right: calc(var(--gutter) * -1);
+  aspect-ratio: 4 / 5;
+}
+
+.collection-manifesto__photo--large .parallax-image {
+  height: 100%;
+}
+
+.collection-manifesto__statement {
+  color: var(--color-primary);
+  font-family: var(--font-editorial);
+  font-size: clamp(36px, 5.6vw, 96px);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+}
+
+.collection-manifesto__statement p {
+  max-width: 20ch;
+}
+
+.collection-manifesto__photo--small {
+  width: 62%;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.collection-manifesto__text {
+  display: grid;
+  max-width: 46ch;
+  color: rgb(23 23 17 / 80%);
+  font-size: 16px;
+  line-height: 1.8;
+  row-gap: 20px;
+}
+
+.collection-manifesto__themes {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 24px;
+  border-top: 1px solid rgb(38 53 26 / 22%);
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 500;
+  gap: 10px 24px;
+  letter-spacing: 0.24em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .collection-manifesto__campaign {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .collection-manifesto__campaign-photo,
+  .collection-manifesto__campaign-photo:nth-child(2) {
+    order: 0;
+    aspect-ratio: 2 / 3;
+    grid-column: auto;
+  }
+
+  .collection-manifesto__campaign-photo:nth-child(2) img {
+    object-position: 50% 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .collection-manifesto__opener {
+    align-items: end;
+    column-gap: 32px;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  }
+
+  .collection-manifesto__body {
+    align-items: center;
+    column-gap: 32px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    row-gap: clamp(72px, 9vw, 144px);
+  }
+
+  .collection-manifesto__opening {
+    align-self: end;
+    padding-bottom: 8%;
+    grid-column: 1 / span 5;
+  }
+
+  .collection-manifesto__photo--large {
+    grid-column: 7 / span 6;
+  }
+
+  .collection-manifesto__statement {
+    grid-column: 2 / span 10;
+  }
+
+  .collection-manifesto__photo--small {
+    width: auto;
+    grid-column: 2 / span 3;
+  }
+
+  .collection-manifesto__text {
+    grid-column: 7 / span 5;
+  }
+}
+
+/* The Chapter */
+
+.collection-chapter {
+  position: relative;
+  display: grid;
+  padding: var(--section-y) var(--gutter);
+  overflow: hidden;
+  background: var(--color-primary);
+  color: var(--color-cream);
+  row-gap: 56px;
+}
+
+.collection-chapter__numeral {
+  position: absolute;
+  top: -0.06em;
+  right: -0.04em;
+  color: transparent;
+  font-family: var(--font-editorial);
+  font-size: clamp(280px, 46vw, 780px);
+  letter-spacing: -0.04em;
+  line-height: 0.8;
+  pointer-events: none;
+  -webkit-text-stroke: 1px rgb(233 178 100 / 24%);
+}
+
+.collection-chapter__copy,
+.collection-chapter__media {
+  position: relative;
+}
+
+.collection-chapter .collection-label {
+  color: var(--color-ochre);
+}
+
+.collection-chapter__title {
+  margin-top: 24px;
+  font-family: var(--font-editorial);
+  font-size: clamp(56px, 8vw, 144px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+.collection-chapter__title span {
+  display: block;
+  margin-top: 20px;
+  color: var(--color-ochre);
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.34em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.collection-chapter__note {
+  margin-top: clamp(40px, 5vw, 72px);
+  font-family: var(--font-editorial);
+  font-size: clamp(26px, 2.7vw, 46px);
+  font-style: italic;
+  line-height: 1.16;
+}
+
+.collection-chapter__note > span {
+  display: block;
+}
+
+.collection-chapter__foundation {
+  max-width: 40ch;
+  margin-top: 24px;
+  color: rgb(245 232 210 / 82%);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.collection-chapter__list {
+  max-width: 460px;
+  margin-top: clamp(40px, 5vw, 72px);
+  border-top: 1px solid rgb(245 232 210 / 22%);
+}
+
+.collection-chapter__item {
+  display: flex;
+  justify-content: space-between;
+  padding-block: 16px;
+  border-bottom: 1px solid rgb(245 232 210 / 22%);
+  font-size: 11px;
+  font-weight: 500;
+  gap: 24px;
+  letter-spacing: 0.24em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.collection-chapter__item span:last-child {
+  color: var(--color-ochre);
+}
+
+.collection-chapter__item--upcoming {
+  color: rgb(245 232 210 / 62%);
+}
+
+.collection-chapter__item--upcoming span:last-child {
+  color: inherit;
+}
+
+.collection-chapter__media {
+  aspect-ratio: 3 / 4;
+}
+
+.collection-chapter__image {
+  height: 100%;
+}
+
+@media (min-width: 1024px) {
+  .collection-chapter {
+    align-items: center;
+    column-gap: clamp(48px, 7vw, 128px);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+/* Les montures — galerie tactile par défaut */
+
+.collection-frames {
+  padding-bottom: var(--section-y);
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.collection-frames .collection-label {
+  color: var(--label-on-light);
+}
+
+.collection-frames__header {
+  display: grid;
+  padding: var(--section-y) var(--gutter) clamp(40px, 5vw, 72px);
+  row-gap: 32px;
+}
+
+.collection-frames__title {
+  margin-top: 20px;
+  color: var(--color-primary);
+  font-family: var(--font-editorial);
+  font-size: clamp(48px, 7.4vw, 128px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.collection-frames__intro {
+  display: grid;
+  max-width: 46ch;
+  color: rgb(23 23 17 / 80%);
+  font-size: 16px;
+  line-height: 1.75;
+  row-gap: 16px;
+}
+
+.collection-frames__track {
+  display: flex;
+  padding: 4px var(--gutter) 24px;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-padding-inline: var(--gutter);
+  scroll-snap-type: x mandatory;
+}
+
+.collection-frames__slide {
+  display: flex;
+  flex: 0 0 min(82vw, 480px);
+  flex-direction: column;
+  gap: 24px;
+  scroll-snap-align: start;
+}
+
+.collection-frames__photo {
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.collection-frames__photo > div {
+  height: 100%;
+  will-change: transform;
+}
+
+.collection-frames__name {
+  margin-top: 8px;
+  color: var(--color-primary);
+  font-family: var(--font-editorial);
+  font-size: clamp(56px, 16vw, 96px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.collection-frames__intention {
+  margin-top: 12px;
+  color: var(--color-brown);
+  font-family: var(--font-editorial);
+  font-size: clamp(22px, 2vw, 32px);
+  font-style: italic;
+}
+
+.collection-frames__finishes {
+  display: flex;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+.collection-frames__finishes li {
+  width: clamp(96px, 11vw, 176px);
+}
+
+.collection-frames__finishes img {
+  aspect-ratio: 1;
+}
+
+.collection-frames__finishes figcaption {
+  margin-top: 10px;
+  color: var(--color-ink);
+}
+
+.collection-frames__progress {
+  display: none;
+}
+
+@media (max-width: 1023.98px) {
+  /* La galerie tactile ignore les transformations pilotées par le scroll. */
+  .collection-frames__track,
+  .collection-frames__photo > div {
+    transform: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .collection-frames__header {
+    align-items: end;
+    column-gap: 48px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* Les montures — desktop : le scroll vertical feuillette le lookbook */
+
+@media (min-width: 1024px) {
+  .collection-frames:not(.collection-frames--static) {
+    padding-bottom: 0;
+  }
+
+  .collection-frames:not(.collection-frames--static) .collection-frames__pin {
+    height: calc(var(--slides) * 100vh);
+  }
+
+  .collection-frames:not(.collection-frames--static)
+    .collection-frames__viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .collection-frames:not(.collection-frames--static) .collection-frames__track {
+    width: calc(var(--slides) * 100vw);
+    height: 100%;
+    padding: 0;
+    gap: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+    will-change: transform;
+  }
+
+  .collection-frames:not(.collection-frames--static) .collection-frames__slide {
+    height: 100%;
+    flex: 0 0 100vw;
+    flex-direction: row;
+    align-items: center;
+    padding-inline: var(--gutter);
+    gap: clamp(48px, 7vw, 128px);
+  }
+
+  .collection-frames:not(.collection-frames--static)
+    .collection-frames__slide:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  .collection-frames:not(.collection-frames--static) .collection-frames__photo {
+    height: 74vh;
+    flex: none;
+    margin-left: 4vw;
+  }
+
+  .collection-frames:not(.collection-frames--static)
+    .collection-frames__slide:nth-child(even)
+    .collection-frames__photo {
+    margin-right: 4vw;
+    margin-left: 0;
+  }
+
+  .collection-frames:not(.collection-frames--static) .collection-frames__name {
+    font-size: clamp(88px, 10.4vw, 190px);
+  }
+
+  .collection-frames:not(.collection-frames--static)
+    .collection-frames__progress {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 40px;
+    left: var(--gutter);
+    display: block;
+    height: 1px;
+    background: rgb(23 23 17 / 14%);
+  }
+
+  .collection-frames__progress span {
+    display: block;
+    height: 100%;
+    background: var(--color-gold);
+    transform-origin: left;
+  }
+}
+
+/* Black / Tortoise */
+
+.collection-materials {
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+
+.collection-materials__header {
+  padding: var(--section-y) var(--gutter) clamp(48px, 6vw, 96px);
+}
+
+.collection-materials__header .collection-label {
+  color: var(--color-ochre);
+}
+
+.collection-materials__statement {
+  max-width: 18ch;
+  margin-top: 24px;
+  font-family: var(--font-editorial);
+  font-size: clamp(32px, 4.6vw, 76px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+}
+
+.collection-materials__panels {
+  display: grid;
+  gap: var(--hairline);
+}
+
+.collection-materials__panel {
+  position: relative;
+  display: flex;
+  min-height: 72svh;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.collection-materials__image,
+.collection-materials__veil {
+  position: absolute;
+  inset: 0;
+}
+
+.collection-materials__veil {
+  background: linear-gradient(
+    180deg,
+    rgb(23 23 17 / 86%) 0%,
+    rgb(23 23 17 / 46%) 40%,
+    rgb(23 23 17 / 0%) 68%
+  );
+}
+
+.collection-materials__copy {
+  position: relative;
+  width: 100%;
+  padding: clamp(36px, 5vw, 80px) var(--gutter);
+}
+
+.collection-materials__image img {
+  object-position: 50% 100%;
+}
+
+.collection-materials__name {
+  margin-top: 12px;
+  font-family: var(--font-editorial);
+  font-size: clamp(56px, 7.4vw, 144px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.collection-materials__panel--tortoise .collection-materials__name {
+  color: var(--color-ochre);
+}
+
+.collection-materials__words {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  font-size: 11px;
+  font-weight: 500;
+  gap: 8px 28px;
+  letter-spacing: 0.26em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+@media (min-width: 900px) {
+  .collection-materials__panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .collection-materials__panel {
+    min-height: clamp(560px, 92vh, 940px);
+  }
+
+  .collection-materials__copy {
+    padding-inline: clamp(32px, 4vw, 64px);
+  }
+
+  .collection-materials__panel:first-child .collection-materials__copy {
+    padding-left: var(--gutter);
+  }
+}
+
+/* Human Book */
+
+.collection-book {
+  padding: var(--section-y) var(--gutter);
+  background: var(--color-cream);
+  color: var(--color-ink);
+}
+
+.collection-book .collection-label,
+.collection-summer .collection-label {
+  color: var(--label-on-light);
+}
+
+.collection-book__header {
+  display: grid;
+  row-gap: 32px;
+}
+
+.collection-book__title {
+  margin-top: 20px;
+  color: var(--color-primary);
+  font-family: var(--font-editorial);
+  font-size: clamp(56px, 10.5vw, 188px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.collection-book__copy {
+  display: grid;
+  max-width: 44ch;
+  color: rgb(23 23 17 / 80%);
+  font-size: 15px;
+  line-height: 1.75;
+  row-gap: 16px;
+}
+
+.collection-book__quote {
+  color: var(--color-brown);
+  font-family: var(--font-editorial);
+  font-size: clamp(24px, 2.2vw, 34px);
+  font-style: italic;
+  line-height: 1.2;
+}
+
+.collection-book__gallery {
+  display: grid;
+  align-items: start;
+  margin-top: clamp(48px, 7vw, 112px);
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.collection-book__portrait {
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.collection-book__gallery li:nth-child(even) {
+  margin-top: 40px;
+}
+
+.collection-book__invitation {
+  max-width: 30ch;
+  margin: clamp(48px, 6vw, 96px) 0 0 auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-gold);
+  color: var(--color-primary);
+  font-family: var(--font-editorial);
+  font-size: clamp(22px, 2vw, 30px);
+  font-style: italic;
+  line-height: 1.25;
+}
+
+@media (min-width: 900px) {
+  .collection-book__header {
+    align-items: end;
+    column-gap: clamp(48px, 6vw, 112px);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .collection-book__gallery {
+    gap: clamp(16px, 2vw, 32px);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .collection-book__gallery li:nth-child(even) {
+    margin-top: 0;
+  }
+
+  .collection-book__gallery li:nth-child(4n + 2) {
+    margin-top: clamp(48px, 7vw, 112px);
+  }
+
+  .collection-book__gallery li:nth-child(4n + 3) {
+    margin-top: clamp(16px, 2vw, 32px);
+  }
+
+  .collection-book__gallery li:nth-child(4n + 4) {
+    margin-top: clamp(72px, 10vw, 160px);
+  }
+}
+
+/* Summer Collection */
+
+.collection-summer {
+  padding-block: var(--section-y);
+  background: var(--color-ochre);
+  color: var(--color-primary);
+}
+
+.collection-summer .collection-label {
+  color: var(--color-brown);
+}
+
+.collection-summer__header {
+  padding-inline: var(--gutter);
+}
+
+.collection-summer__title {
+  margin-top: 16px;
+  font-family: var(--font-editorial);
+  font-size: clamp(60px, 11.5vw, 208px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.88;
+}
+
+.collection-summer__title em {
+  display: block;
+  padding-left: 12%;
+  color: var(--color-brown);
+}
+
+.collection-summer__gallery {
+  display: grid;
+  margin-top: clamp(40px, 6vw, 96px);
+  padding-inline: var(--gutter);
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.collection-summer__photo {
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.collection-summer__gallery li:first-child {
+  grid-column: 1 / -1;
+}
+
+.collection-summer__gallery li:first-child .collection-summer__photo {
+  aspect-ratio: 4 / 5;
+}
+
+@media (min-width: 900px) {
+  .collection-summer__gallery {
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(12px, 1.4vw, 24px);
+  }
+
+  .collection-summer__gallery li {
+    flex: 1;
+  }
+
+  .collection-summer__gallery li:first-child {
+    flex: 1.7;
+  }
+
+  .collection-summer__gallery li:nth-child(2) {
+    margin-bottom: clamp(40px, 5vw, 80px);
+  }
+
+  .collection-summer__gallery li:nth-child(3) .collection-summer__photo {
+    aspect-ratio: 2 / 3;
+  }
+
+  .collection-summer__gallery li:nth-child(4) {
+    margin-bottom: clamp(64px, 8vw, 128px);
+  }
+}
+
+/* Futurs chapitres */
+
+.collection-future {
+  display: grid;
+  justify-items: center;
+  padding: var(--section-y) var(--gutter);
+  background: var(--color-primary);
+  color: var(--color-cream);
+  text-align: center;
+}
+
+.collection-future .collection-label {
+  color: var(--color-ochre);
+}
+
+.collection-future__title {
+  margin-top: 24px;
+  font-family: var(--font-editorial);
+  font-size: clamp(40px, 6.4vw, 112px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.collection-future__chapters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: clamp(48px, 6vw, 96px);
+  gap: 20px clamp(20px, 4vw, 64px);
+}
+
+.collection-future__chapter {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 4vw, 64px);
+}
+
+.collection-future__chapter > div {
+  display: grid;
+  justify-items: center;
+  row-gap: 12px;
+}
+
+.collection-future__arrow {
+  width: clamp(28px, 3.4vw, 56px);
+  height: clamp(28px, 3.4vw, 56px);
+  color: var(--color-ochre);
+}
+
+.collection-future__name {
+  font-family: var(--font-editorial);
+  font-size: clamp(28px, 3.6vw, 60px);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.collection-future__chapter--upcoming .collection-future__name {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(245 232 210 / 70%);
+}
+
+/* Conclusion */
+
+.collection-closing {
+  display: grid;
+  justify-items: center;
+  padding: var(--section-y) var(--gutter);
+  border-bottom: 1px solid rgb(245 232 210 / 12%);
+  background: var(--color-ink);
+  color: var(--color-cream);
+  text-align: center;
+}
+
+.collection-closing__statement {
+  max-width: 20ch;
+  font-family: var(--font-editorial);
+  font-size: clamp(30px, 5vw, 88px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+
+.collection-closing__statement > span {
+  display: block;
+}
+
+.collection-closing__statement > span:last-child {
+  margin-top: 0.3em;
+  color: var(--color-ochre);
+}
+
+.collection-closing__signature {
+  display: grid;
+  justify-items: center;
+  margin-block: clamp(48px, 6vw, 88px) 36px;
+  row-gap: 16px;
+}
+
+.collection-closing__logo {
+  width: clamp(160px, 15vw, 220px);
+}
+
+.collection-closing__signature .collection-label {
+  color: var(--color-ochre);
+}

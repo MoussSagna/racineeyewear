@@ -24,6 +24,7 @@ export function Footer() {
           ))}
         </nav>
         <div className="footer-socials">
+          <a href="mailto:hello@racineeyewear.com">hello@racineeyewear.com</a>
           <a
             aria-label="Instagram RACINE EYEWEAR"
             href="https://www.instagram.com/racineeyewear/"
