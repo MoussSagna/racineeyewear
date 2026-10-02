@@ -19,7 +19,7 @@ describe('Home', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByRole('img', {
-        name: 'Deux modèles RACINE portent des lunettes de la collection ALL POWER',
+        name: 'Une femme et un homme en vestes de cuir regardent au loin, portant des montures RACINE de la collection ALL POWER',
       }),
     ).toBeInTheDocument()
     expect(

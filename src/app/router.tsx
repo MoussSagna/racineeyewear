@@ -1,11 +1,11 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, type RouteObject } from 'react-router-dom'
 import { SiteLayout } from '../components/layout/SiteLayout'
 import { Brand } from '../pages/Brand'
 import { Collection } from '../pages/Collection'
 import { Contact } from '../pages/Contact'
 import { Home } from '../pages/Home'
 
-export const router = createBrowserRouter([
+export const routes: RouteObject[] = [
   {
     element: <SiteLayout />,
     children: [
@@ -15,4 +15,6 @@ export const router = createBrowserRouter([
       { path: '/contact', element: <Contact /> },
     ],
   },
-])
+]
+
+export const router = createBrowserRouter(routes)

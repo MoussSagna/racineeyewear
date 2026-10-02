@@ -1,29 +1,40 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { NavLink, useLocation } from 'react-router-dom'
-import racineLogo from '../../assets/images/logo/logo.png'
 import { navigationItems } from '../../data/navigation'
+import { easeOutSoft } from '../../lib/motion'
+import { useScrolled } from '../../lib/useScrolled'
+import { cn } from '../../lib/utils'
+import { Logo } from '../ui/Logo'
 import { MobileMenu } from './MobileMenu'
 
 export function Header() {
   const { pathname } = useLocation()
   const prefersReducedMotion = useReducedMotion()
-  const animateEntrance = pathname === '/' && !prefersReducedMotion
+  const isScrolled = useScrolled(24)
+  const isHome = pathname === '/'
+  const animateEntrance = isHome && !prefersReducedMotion
 
   return (
     <motion.header
       animate={{ opacity: 1, y: 0 }}
-      className="site-header"
-      initial={animateEntrance ? { opacity: 0, y: -14 } : false}
-      transition={{ duration: 0.45, ease: 'easeOut' }}
+      className={cn(
+        'site-header',
+        isHome && 'site-header--overlay',
+        isScrolled && 'site-header--scrolled',
+      )}
+      initial={animateEntrance ? { opacity: 0, y: -16 } : false}
+      transition={{ duration: 0.5, delay: 0.1, ease: easeOutSoft }}
     >
+      <span aria-hidden="true" className="site-header__glass" />
       <NavLink aria-label="RACINE, accueil" className="brand-mark" to="/">
-        <motion.img
-          alt="RACINE"
+        <motion.span
           animate={{ opacity: 1, scale: 1 }}
+          className="brand-mark__motion"
           initial={animateEntrance ? { opacity: 0, scale: 0.96 } : false}
-          src={racineLogo}
-          transition={{ duration: 0.45, delay: animateEntrance ? 0.12 : 0 }}
-        />
+          transition={{ duration: 0.55, delay: 0.22, ease: easeOutSoft }}
+        >
+          <Logo />
+        </motion.span>
       </NavLink>
       <nav aria-label="Navigation principale" className="desktop-navigation">
         {navigationItems.map((item) => (
