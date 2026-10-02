@@ -1,29 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { NavLink } from 'react-router-dom'
 import { navigationItems } from '../../data/navigation'
 import { easeOutSoft } from '../../lib/motion'
 
-export function MobileMenu() {
-  const [isOpen, setIsOpen] = useState(false)
+type MobileMenuProps = {
+  isOpen: boolean
+  onOpenChange: (isOpen: boolean) => void
+}
+
+export function MobileMenu({ isOpen, onOpenChange }: MobileMenuProps) {
   const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!isOpen) return
 
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsOpen(false)
+      if (event.key === 'Escape') onOpenChange(false)
     }
     document.addEventListener('keydown', closeOnEscape)
-    // Le header reste visible au scroll : on fige la page derrière le panneau.
+    // On fige la page derrière le panneau.
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', closeOnEscape)
       document.body.style.overflow = previousOverflow
     }
-  }, [isOpen])
+  }, [isOpen, onOpenChange])
 
   return (
     <div className="mobile-navigation">
@@ -32,7 +36,7 @@ export function MobileMenu() {
         aria-expanded={isOpen}
         aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
         className="menu-toggle"
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={() => onOpenChange(!isOpen)}
         type="button"
       >
         {isOpen ? (
@@ -65,7 +69,7 @@ export function MobileMenu() {
               >
                 <NavLink
                   end={item.to === '/'}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => onOpenChange(false)}
                   to={item.to}
                 >
                   {item.label}

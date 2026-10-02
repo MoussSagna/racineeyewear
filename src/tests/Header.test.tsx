@@ -1,4 +1,10 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it } from 'vitest'
 import userEvent from '@testing-library/user-event'
@@ -55,10 +61,10 @@ describe('Header', () => {
     expect(header).toHaveClass('site-header', 'site-header--overlay')
     expect(header).not.toHaveClass('site-header--scrolled')
 
-    scrollTo(24)
+    scrollTo(10)
     expect(header).not.toHaveClass('site-header--scrolled')
 
-    scrollTo(25)
+    scrollTo(11)
     expect(header).toHaveClass('site-header--scrolled')
     expect(screen.getByRole('img', { name: 'RACINE' })).toBeInTheDocument()
     expect(
@@ -69,6 +75,116 @@ describe('Header', () => {
 
     scrollTo(0)
     expect(header).not.toHaveClass('site-header--scrolled')
+  })
+
+  it('reste visible et transparent tout en haut de page', () => {
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>,
+    )
+
+    const header = screen.getByRole('banner')
+    expect(header).not.toHaveClass('site-header--hidden')
+    expect(header).not.toHaveClass('site-header--scrolled')
+
+    // Sous le seuil de haut de page, descendre ne cache rien.
+    scrollTo(10)
+    expect(header).not.toHaveClass('site-header--hidden')
+    expect(header).not.toHaveClass('site-header--scrolled')
+  })
+
+  it('se cache quand la page descend et revient en glass quand elle remonte', () => {
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>,
+    )
+
+    const header = screen.getByRole('banner')
+
+    scrollTo(120)
+    expect(header).toHaveClass('site-header--hidden')
+
+    scrollTo(480)
+    expect(header).toHaveClass('site-header--hidden')
+
+    scrollTo(460)
+    expect(header).not.toHaveClass('site-header--hidden')
+    expect(header).toHaveClass('site-header--scrolled')
+
+    scrollTo(300)
+    expect(header).not.toHaveClass('site-header--hidden')
+    expect(header).toHaveClass('site-header--scrolled')
+
+    scrollTo(340)
+    expect(header).toHaveClass('site-header--hidden')
+
+    scrollTo(0)
+    expect(header).not.toHaveClass('site-header--hidden')
+    expect(header).not.toHaveClass('site-header--scrolled')
+  })
+
+  it('ignore les micro-mouvements de scroll', () => {
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>,
+    )
+
+    const header = screen.getByRole('banner')
+
+    scrollTo(200)
+    expect(header).toHaveClass('site-header--hidden')
+
+    scrollTo(196)
+    expect(header).toHaveClass('site-header--hidden')
+
+    scrollTo(190)
+    expect(header).not.toHaveClass('site-header--hidden')
+
+    scrollTo(195)
+    expect(header).not.toHaveClass('site-header--hidden')
+  })
+
+  it('revient à l’écran quand le focus clavier entre dans la navigation', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>,
+    )
+
+    const header = screen.getByRole('banner')
+    scrollTo(300)
+    expect(header).toHaveClass('site-header--hidden')
+
+    await user.tab()
+    expect(screen.getByRole('link', { name: 'RACINE, accueil' })).toHaveFocus()
+    expect(header).not.toHaveClass('site-header--hidden')
+  })
+
+  it('reste visible tant que le menu mobile est ouvert', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>,
+    )
+
+    const header = screen.getByRole('banner')
+    scrollTo(300)
+    scrollTo(280)
+    await user.click(screen.getByRole('button', { name: 'Ouvrir le menu' }))
+
+    scrollTo(600)
+    expect(header).not.toHaveClass('site-header--hidden')
+
+    await user.click(screen.getByRole('button', { name: 'Fermer le menu' }))
+    scrollTo(700)
+    expect(header).toHaveClass('site-header--hidden')
   })
 
   it('ouvre le menu mobile et expose les mêmes routes', async () => {

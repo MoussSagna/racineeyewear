@@ -113,6 +113,12 @@ button:focus-visible {
   pointer-events: auto;
 }
 
+/* Sorti de l'écran pendant que la page descend (le déplacement est animé par Motion). */
+
+.site-header--hidden > * {
+  pointer-events: none;
+}
+
 /* Fond glass pleine largeur : invisible en haut de page, il apparaît au scroll. */
 
 .site-header__glass {

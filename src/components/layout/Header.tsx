@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { navigationItems } from '../../data/navigation'
 import { easeOutSoft } from '../../lib/motion'
+import { useHideOnScroll } from '../../lib/useHideOnScroll'
 import { useScrolled } from '../../lib/useScrolled'
 import { cn } from '../../lib/utils'
 import { Logo } from '../ui/Logo'
@@ -10,23 +12,47 @@ import { MobileMenu } from './MobileMenu'
 /** Pages dont le Hero plein écran passe sous le header. */
 const overlayRoutes = ['/', '/la-marque']
 
+/** En deçà, la page est considérée « en haut » : header visible et transparent. */
+const topOffset = 10
+
 export function Header() {
   const { pathname } = useLocation()
   const prefersReducedMotion = useReducedMotion()
-  const isScrolled = useScrolled(24)
+  const isScrolled = useScrolled(topOffset)
+  const isScrollingDown = useHideOnScroll({ topOffset })
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [hasKeyboardFocus, setHasKeyboardFocus] = useState(false)
   const isOverlay = overlayRoutes.includes(pathname.replace(/\/+$/, '') || '/')
   const animateEntrance = isOverlay && !prefersReducedMotion
+  // Le header reste à l'écran menu ouvert, et tant qu'on y navigue au clavier.
+  const isHidden = isScrollingDown && !isMenuOpen && !hasKeyboardFocus
+
+  const transition = prefersReducedMotion
+    ? { duration: 0 }
+    : isScrolled
+      ? { duration: 0.32, ease: easeOutSoft }
+      : { duration: 0.5, delay: 0.1, ease: easeOutSoft }
 
   return (
     <motion.header
-      animate={{ opacity: 1, y: 0 }}
+      animate={isHidden ? { opacity: 0, y: '-100%' } : { opacity: 1, y: 0 }}
       className={cn(
         'site-header',
         isOverlay && 'site-header--overlay',
         isScrolled && 'site-header--scrolled',
+        isHidden && 'site-header--hidden',
       )}
       initial={animateEntrance ? { opacity: 0, y: -16 } : false}
-      transition={{ duration: 0.5, delay: 0.1, ease: easeOutSoft }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setHasKeyboardFocus(false)
+        }
+      }}
+      onKeyUp={(event) => {
+        // Tab relâchée dans le header : le focus clavier vient d'y entrer.
+        if (event.key === 'Tab') setHasKeyboardFocus(true)
+      }}
+      transition={transition}
     >
       <span aria-hidden="true" className="site-header__glass" />
       <NavLink aria-label="RACINE, accueil" className="brand-mark" to="/">
@@ -53,7 +79,7 @@ export function Header() {
           </NavLink>
         ))}
       </nav>
-      <MobileMenu />
+      <MobileMenu isOpen={isMenuOpen} onOpenChange={setIsMenuOpen} />
     </motion.header>
   )
 }
