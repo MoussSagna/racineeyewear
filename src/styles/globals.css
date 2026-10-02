@@ -113,14 +113,13 @@ button:focus-visible {
   pointer-events: auto;
 }
 
-/* Barre flottante : invisible en haut de page, elle apparaît au scroll. */
+/* Fond glass pleine largeur : invisible en haut de page, il apparaît au scroll. */
 
 .site-header__glass {
   position: absolute;
   z-index: -1;
-  inset: 8px calc(var(--gutter) - 14px);
-  border: 1px solid rgb(233 178 100 / 16%);
-  border-radius: 16px;
+  inset: 0;
+  border-bottom: 1px solid rgb(233 178 100 / 16%);
   background: rgb(27 36 19 / 72%);
   box-shadow: 0 8px 28px rgb(23 23 17 / 14%);
   opacity: 0;
@@ -255,10 +254,6 @@ button:focus-visible {
 
   .mobile-navigation {
     display: none;
-  }
-
-  .site-header__glass {
-    inset: 12px calc(var(--gutter) - 28px);
   }
 }
 
