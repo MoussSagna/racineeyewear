@@ -221,31 +221,6 @@ describe('Contact', () => {
     expect(screen.getByRole('banner')).not.toHaveClass('site-header--overlay')
   })
 
-  it.each([
-    ['Mentions légales', '/mentions-legales'],
-    ['Politique de confidentialité', '/politique-de-confidentialite'],
-    ['Cookies & traceurs', '/cookies'],
-  ])(
-    'mène du footer à la page « %s », sans contenu juridique inventé',
-    async (name, path) => {
-      const user = userEvent.setup()
-      renderRoute('/contact')
-
-      const link = within(
-        screen.getByRole('navigation', { name: 'Informations légales' }),
-      ).getByRole('link', { name })
-      expect(link).toHaveAttribute('href', path)
-
-      await user.click(link)
-      expect(
-        screen.getByRole('heading', { level: 1, name }),
-      ).toBeInTheDocument()
-      expect(
-        screen.getByText('Cette page est en cours de rédaction.'),
-      ).toBeInTheDocument()
-    },
-  )
-
   it('est accessible depuis la navigation et renvoie vers les autres pages', async () => {
     const user = userEvent.setup()
     renderRoute('/')

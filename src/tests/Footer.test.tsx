@@ -66,7 +66,7 @@ describe('Footer', () => {
     }
   })
 
-  it('renvoie vers les trois pages légales', () => {
+  it('renvoie vers les deux pages légales, sans page Cookies', () => {
     renderFooter()
 
     const legal = screen.getByRole('navigation', {
@@ -75,12 +75,13 @@ describe('Footer', () => {
     for (const [name, href] of [
       ['Mentions légales', '/mentions-legales'],
       ['Politique de confidentialité', '/politique-de-confidentialite'],
-      ['Cookies & traceurs', '/cookies'],
     ]) {
       expect(within(legal).getByRole('link', { name })).toHaveAttribute(
         'href',
         href,
       )
     }
+    expect(within(legal).getAllByRole('link')).toHaveLength(2)
+    expect(screen.queryByRole('link', { name: /cookies/i })).toBeNull()
   })
 })

@@ -21,12 +21,11 @@ export const socialLinks = [
 
 export type SocialId = (typeof socialLinks)[number]['id']
 
-/** Pages légales : les routes existent, leur contenu reste à fournir par la marque. */
+/** Pages légales. Le site n'utilisant aucun cookie, il n'a pas de page dédiée. */
 export const legalLinks = [
   { label: 'Mentions légales', to: '/mentions-legales' },
   {
     label: 'Politique de confidentialité',
     to: '/politique-de-confidentialite',
   },
-  { label: 'Cookies & traceurs', to: '/cookies' },
 ] as const

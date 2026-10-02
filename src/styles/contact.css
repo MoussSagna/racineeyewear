@@ -315,8 +315,31 @@
 }
 
 .contact-form__footer {
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  justify-items: end;
+  row-gap: 28px;
+}
+
+.contact-form__privacy {
+  max-width: 62ch;
+  justify-self: start;
+  color: rgb(23 23 17 / 72%);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.contact-form__privacy a {
+  color: var(--color-primary);
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .contact-form__footer {
+    align-items: center;
+    column-gap: 40px;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
 }
 
 .contact-form__footer button {

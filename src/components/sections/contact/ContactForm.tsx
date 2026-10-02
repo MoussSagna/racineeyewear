@@ -1,5 +1,6 @@
 import { useRef, useState, type FormEvent } from 'react'
 import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { contactEmail } from '../../../data/contact'
 import { ScrollReveal } from '../../ui/ScrollReveal'
 
@@ -151,6 +152,15 @@ export function ContactForm() {
         })}
 
         <div className="contact-form__footer">
+          <p className="contact-form__privacy">
+            Les informations renseignées dans ce formulaire sont utilisées
+            uniquement pour répondre à votre demande. Pour en savoir plus sur le
+            traitement de vos données et vos droits, consultez notre{' '}
+            <Link to="/politique-de-confidentialite">
+              Politique de confidentialité
+            </Link>
+            .
+          </p>
           <button className="arrow-link arrow-link--pill" type="submit">
             <span>Envoyer</span>
             <ArrowRight aria-hidden="true" size={16} strokeWidth={1.5} />
