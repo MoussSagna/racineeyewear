@@ -7,19 +7,22 @@ import { cn } from '../../lib/utils'
 import { Logo } from '../ui/Logo'
 import { MobileMenu } from './MobileMenu'
 
+/** Pages dont le Hero plein écran passe sous le header. */
+const overlayRoutes = ['/', '/la-marque']
+
 export function Header() {
   const { pathname } = useLocation()
   const prefersReducedMotion = useReducedMotion()
   const isScrolled = useScrolled(24)
-  const isHome = pathname === '/'
-  const animateEntrance = isHome && !prefersReducedMotion
+  const isOverlay = overlayRoutes.includes(pathname.replace(/\/+$/, '') || '/')
+  const animateEntrance = isOverlay && !prefersReducedMotion
 
   return (
     <motion.header
       animate={{ opacity: 1, y: 0 }}
       className={cn(
         'site-header',
-        isHome && 'site-header--overlay',
+        isOverlay && 'site-header--overlay',
         isScrolled && 'site-header--scrolled',
       )}
       initial={animateEntrance ? { opacity: 0, y: -16 } : false}

@@ -9,3 +9,7 @@ vi.stubGlobal(
 		disconnect() {}
 	},
 )
+
+// jsdom n'implémente pas la lecture des médias.
+vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue()
+vi.spyOn(HTMLMediaElement.prototype, 'pause').mockReturnValue()
