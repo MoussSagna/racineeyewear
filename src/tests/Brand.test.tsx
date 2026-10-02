@@ -173,7 +173,7 @@ describe('La marque', () => {
 
     await user.click(contactLink)
     expect(
-      screen.getByRole('heading', { level: 1, name: 'Contact' }),
+      screen.getByRole('heading', { level: 1, name: /parlons\./i }),
     ).toBeInTheDocument()
     expect(screen.getByRole('banner')).not.toHaveClass('site-header--overlay')
   })

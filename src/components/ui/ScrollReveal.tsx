@@ -8,18 +8,20 @@ type ScrollRevealProps = {
   as?: 'div' | 'span'
   className?: string
   delay?: number
-  /** `rise` : opacity + translateY. `unveil` : clip-path, pour les images. */
-  variant?: 'rise' | 'unveil'
+  /** `rise` : opacity + translateY. `unveil` : clip-path, pour les images. `fade` : apparition très légère. */
+  variant?: 'rise' | 'unveil' | 'fade'
 }
 
 const hidden = {
   rise: { opacity: 0, y: 40 },
   unveil: { opacity: 0, clipPath: 'inset(14% 0% 0% 0%)', y: 24 },
+  fade: { opacity: 0, y: 12 },
 }
 
 const visible = {
   rise: { opacity: 1, y: 0 },
   unveil: { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)', y: 0 },
+  fade: { opacity: 1, y: 0 },
 }
 
 export function ScrollReveal({

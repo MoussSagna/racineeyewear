@@ -1,18 +1,27 @@
 import { Link } from 'react-router-dom'
+import { contactEmail, legalLinks, socialLinks } from '../../data/contact'
 import { navigationItems } from '../../data/navigation'
 import { Logo } from '../ui/Logo'
+import { ScrollReveal } from '../ui/ScrollReveal'
+import { SocialIcon } from '../ui/SocialIcon'
 
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="site-footer__main">
-        <Link
-          aria-label="RACINE EYEWEAR, accueil"
-          className="footer-brand"
-          to="/"
-        >
-          <Logo alt="" />
-        </Link>
+      <ScrollReveal className="site-footer__main" variant="fade">
+        <div className="footer-identity">
+          <Link
+            aria-label="RACINE EYEWEAR, accueil"
+            className="footer-brand"
+            to="/"
+          >
+            <Logo alt="" />
+          </Link>
+          <a className="footer-email" href={`mailto:${contactEmail}`}>
+            {contactEmail}
+          </a>
+        </div>
+
         <nav
           aria-label="Navigation de pied de page"
           className="footer-navigation"
@@ -23,29 +32,36 @@ export function Footer() {
             </Link>
           ))}
         </nav>
-        <div className="footer-socials">
-          <a href="mailto:hello@racineeyewear.com">hello@racineeyewear.com</a>
-          <a
-            aria-label="Instagram RACINE EYEWEAR"
-            href="https://www.instagram.com/racineeyewear/"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Instagram
-          </a>
-          <a
-            aria-label="LinkedIn de Carine Beyssac"
-            href="https://www.linkedin.com/in/carine-beyssac-a87362146/"
-            rel="noreferrer"
-            target="_blank"
-          >
-            LinkedIn
-          </a>
-        </div>
-      </div>
+
+        <ul aria-label="Réseaux sociaux" className="footer-socials">
+          {socialLinks.map((social) => (
+            <li key={social.id}>
+              <a
+                aria-label={social.label}
+                href={social.url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span className="footer-socials__name">{social.name}</span>
+                <SocialIcon id={social.id} size={26} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </ScrollReveal>
+
       <div className="site-footer__legal">
-        <p className="footer-copyright">© RACINE EYEWEAR</p>
-        <p className="footer-tagline">La Culture dans chaque regard.</p>
+        <nav aria-label="Informations légales" className="footer-legal">
+          {legalLinks.map((link) => (
+            <Link key={link.to} to={link.to}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="footer-signature">
+          <p className="footer-copyright">© RACINE EYEWEAR</p>
+          <p className="footer-tagline">La Culture dans chaque regard.</p>
+        </div>
       </div>
     </footer>
   )
