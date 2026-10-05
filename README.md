@@ -25,5 +25,11 @@ npm run dev
 - `/la-marque` : La marque
 - `/collection` : Collection
 - `/contact` : Contact
+- `/mentions-legales`, `/politique-de-confidentialite` : pages légales
+
+## Contact
+
+Le site n'a ni formulaire ni backend : le contact passe par un lien
+`mailto:hello@racineeyewear.com` (page Contact et footer).
 
 Les textes de référence et les décisions d'architecture sont dans `doc/`.

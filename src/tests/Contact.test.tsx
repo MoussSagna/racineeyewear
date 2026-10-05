@@ -9,28 +9,15 @@ function renderRoute(path: string) {
   return render(<RouterProvider router={router} />)
 }
 
-function getForm() {
-  return screen.getByRole('form', { name: /envoyer\s*un message/i })
-}
-
-async function fillForm(
-  user: ReturnType<typeof userEvent.setup>,
-  values: Partial<Record<'Nom' | 'Email' | 'Sujet' | 'Message', string>>,
-) {
-  for (const [label, value] of Object.entries(values)) {
-    await user.type(
-      within(getForm()).getByRole('textbox', { name: label }),
-      value,
-    )
-  }
-}
-
 beforeEach(() => {
   // ScrollRestoration appelle `scrollTo`, absent de jsdom.
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
 })
 
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  vi.unstubAllGlobals()
+})
 
 describe('Contact', () => {
   it('ouvre sur le Hero « Parlons. De regards. De RACINE. »', () => {
@@ -55,118 +42,73 @@ describe('Contact', () => {
     ).toBeInTheDocument()
   })
 
-  it('met en avant l’adresse email, cliquable', () => {
+  it('fait de l’adresse email, en mailto, le moyen de contact de la page', () => {
     renderRoute('/contact')
 
     const section = screen.getByRole('region', { name: 'Écrire à RACINE' })
-    expect(
-      within(section).getByRole('link', { name: 'hello@racineeyewear.com' }),
-    ).toHaveAttribute('href', 'mailto:hello@racineeyewear.com')
-  })
+    expect(section).toHaveAttribute('id', 'nous-ecrire')
 
-  it('propose un formulaire à quatre champs requis et étiquetés', () => {
-    renderRoute('/contact')
-
-    const form = getForm()
-    expect(within(form).getByRole('textbox', { name: 'Nom' })).toHaveAttribute(
-      'type',
-      'text',
-    )
-    expect(
-      within(form).getByRole('textbox', { name: 'Email' }),
-    ).toHaveAttribute('type', 'email')
-    expect(
-      within(form).getByRole('textbox', { name: 'Sujet' }),
-    ).toHaveAttribute('type', 'text')
-    expect(within(form).getByRole('textbox', { name: 'Message' }).tagName).toBe(
-      'TEXTAREA',
-    )
-    for (const label of ['Nom', 'Email', 'Sujet', 'Message']) {
-      expect(within(form).getByRole('textbox', { name: label })).toBeRequired()
-    }
-    expect(
-      within(form).getByRole('button', { name: 'Envoyer' }),
-    ).toHaveAttribute('type', 'submit')
-  })
-
-  it('signale les champs vides et place le focus sur le premier', async () => {
-    const user = userEvent.setup()
-    renderRoute('/contact')
-    const form = getForm()
-
-    await user.click(within(form).getByRole('button', { name: 'Envoyer' }))
-
-    expect(within(form).getAllByText('Ce champ est requis.')).toHaveLength(4)
-    const name = within(form).getByRole('textbox', { name: 'Nom' })
-    expect(name).toHaveFocus()
-    expect(name).toBeInvalid()
-    expect(name).toHaveAccessibleDescription('Ce champ est requis.')
-    expect(within(form).getByRole('status')).toBeEmptyDOMElement()
-  })
-
-  it('refuse une adresse email invalide puis efface l’erreur une fois corrigée', async () => {
-    const user = userEvent.setup()
-    renderRoute('/contact')
-    const form = getForm()
-
-    await fillForm(user, {
-      Nom: 'Awa',
-      Email: 'awa@exemple',
-      Sujet: 'Collaboration',
-      Message: 'Bonjour RACINE',
+    const link = within(section).getByRole('link', {
+      name: 'hello@racineeyewear.com',
     })
-    await user.click(within(form).getByRole('button', { name: 'Envoyer' }))
+    expect(link).toHaveAttribute('href', 'mailto:hello@racineeyewear.com')
+    expect(link).not.toHaveAttribute('target')
+    expect(within(section).getAllByRole('link')).toHaveLength(1)
+  })
 
-    const email = within(form).getByRole('textbox', { name: 'Email' })
-    expect(email).toHaveAccessibleDescription(
-      'Veuillez renseigner une adresse email valide.',
+  it('ne contient plus aucun formulaire ni mention liée au formulaire', () => {
+    const { container } = renderRoute('/contact')
+    const page = container.querySelector('.contact-page')!
+
+    expect(page.querySelector('form')).toBeNull()
+    expect(page.querySelectorAll('input, textarea, select')).toHaveLength(0)
+    expect(within(page as HTMLElement).queryAllByRole('button')).toHaveLength(0)
+    expect(within(page as HTMLElement).queryAllByRole('textbox')).toHaveLength(
+      0,
     )
-    expect(email).toHaveFocus()
-    expect(within(form).queryByText('Ce champ est requis.')).toBeNull()
-    expect(within(form).getByRole('status')).toBeEmptyDOMElement()
-
-    await user.type(email, '.fr')
-    expect(email).toBeValid()
+    expect(page).not.toHaveTextContent(
+      /formulaire|envoyer un message|champs requis|envoi en cours/i,
+    )
     expect(
-      within(form).queryByText('Veuillez renseigner une adresse email valide.'),
+      within(page as HTMLElement).queryByRole('link', {
+        name: /politique de confidentialité/i,
+      }),
     ).toBeNull()
   })
 
-  it('ne prétend pas avoir envoyé le message et propose la messagerie', async () => {
+  it('n’appelle aucune API : le contact n’utilise que le lien mailto', async () => {
+    const fetchMock = vi.fn()
+    vi.stubGlobal('fetch', fetchMock)
     const user = userEvent.setup()
     renderRoute('/contact')
-    const form = getForm()
 
-    await fillForm(user, {
-      Nom: 'Awa Diop',
-      Email: 'awa@exemple.fr',
-      Sujet: 'Collaboration',
-      Message: 'Bonjour RACINE',
-    })
-    await user.click(within(form).getByRole('button', { name: 'Envoyer' }))
+    const link = within(
+      screen.getByRole('region', { name: 'Écrire à RACINE' }),
+    ).getByRole('link', { name: 'hello@racineeyewear.com' })
+    // jsdom ne suit pas les liens mailto : on neutralise la navigation.
+    link.addEventListener('click', (event) => event.preventDefault())
+    await user.click(link)
 
-    const status = within(form).getByRole('status')
-    expect(status).toHaveTextContent(/rien n’a été transmis à RACINE/i)
-    expect(status).toHaveTextContent(/pas encore\s*relié à un service d’envoi/i)
-    expect(status).not.toHaveTextContent(/message envoyé|merci/i)
+    expect(fetchMock).not.toHaveBeenCalled()
+    expect(
+      screen.getByRole('heading', { level: 1, name: /parlons\./i }),
+    ).toBeInTheDocument()
+  })
 
-    const mailto = within(status).getByRole('link', {
-      name: /depuis votre messagerie/i,
-    })
-    const href = mailto.getAttribute('href')!
-    expect(href.startsWith('mailto:hello@racineeyewear.com?')).toBe(true)
-    const params = new URLSearchParams(href.split('?')[1])
-    expect(params.get('subject')).toBe('Collaboration')
-    expect(params.get('body')).toBe(
-      'Bonjour RACINE\n\nAwa Diop\nawa@exemple.fr',
-    )
+  it('enchaîne les sections sans vide : email, réseaux, manifeste, image', () => {
+    const { container } = renderRoute('/contact')
 
-    // Modifier le message retire l'état « prêt » : le lien ne doit pas rester périmé.
-    await user.type(
-      within(form).getByRole('textbox', { name: 'Message' }),
-      ' !',
-    )
-    expect(status).toBeEmptyDOMElement()
+    expect(
+      [...container.querySelectorAll('.contact-page > *')]
+        .filter((node) => node.tagName !== 'TITLE')
+        .map((node) => node.className),
+    ).toEqual([
+      'contact-hero',
+      'contact-email',
+      'contact-socials',
+      'contact-manifesto',
+      'contact-closing',
+    ])
   })
 
   it('affiche Instagram et LinkedIn avec leurs icônes dans la page', () => {
@@ -208,6 +150,34 @@ describe('Contact', () => {
 
     const closing = screen.getByRole('region', { name: 'RACINE' })
     expect(within(closing).getAllByRole('img')).toHaveLength(2)
+  })
+
+  it('garde dans le footer l’email, les réseaux et les deux liens légaux', () => {
+    renderRoute('/contact')
+
+    const footer = screen.getByRole('contentinfo')
+    expect(
+      within(footer).getByRole('link', { name: 'hello@racineeyewear.com' }),
+    ).toHaveAttribute('href', 'mailto:hello@racineeyewear.com')
+    expect(
+      within(footer).getByRole('link', { name: 'Instagram RACINE' }),
+    ).toHaveAttribute('href', 'https://www.instagram.com/racineeyewear/')
+    expect(
+      within(footer).getByRole('link', { name: 'LinkedIn RACINE' }),
+    ).toHaveAttribute(
+      'href',
+      'https://www.linkedin.com/in/carine-beyssac-a87362146/',
+    )
+
+    const legal = within(footer).getByRole('navigation', {
+      name: 'Informations légales',
+    })
+    expect(
+      within(legal)
+        .getAllByRole('link')
+        .map((link) => link.getAttribute('href')),
+    ).toEqual(['/mentions-legales', '/politique-de-confidentialite'])
+    expect(within(footer).queryByRole('link', { name: /cookies/i })).toBeNull()
   })
 
   it('garde le header plein et marque « Contact » comme page active', () => {

@@ -1,6 +1,8 @@
+import { ArrowRight } from 'lucide-react'
 import { contactEmail } from '../../../data/contact'
 import { ScrollReveal } from '../../ui/ScrollReveal'
 
+/** Le contact passe uniquement par ce lien `mailto:` : ni formulaire, ni envoi côté site. */
 export function ContactEmail() {
   return (
     <section
@@ -19,6 +21,7 @@ export function ContactEmail() {
       <ScrollReveal delay={0.16}>
         <a className="contact-email__address" href={`mailto:${contactEmail}`}>
           {contactEmail}
+          <ArrowRight aria-hidden="true" strokeWidth={1} />
         </a>
       </ScrollReveal>
     </section>

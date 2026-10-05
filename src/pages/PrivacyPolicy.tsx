@@ -4,10 +4,10 @@ import { LegalTodo } from '../components/sections/legal/LegalTodo'
 import { contactEmail } from '../data/contact'
 
 /**
- * Politique de confidentialité, alignée sur l'état réel du site : pas de
- * cookie, pas de mesure d'audience, pas de publicité. Le formulaire de contact
- * n'est pas encore relié à un service d'envoi (intégration Resend prévue) :
- * les `LegalTodo` correspondants sont à lever lors de cette intégration.
+ * Politique de confidentialité, alignée sur l'état réel du site : aucun
+ * formulaire, aucun cookie, aucune mesure d'audience, aucune publicité. Le
+ * contact passe uniquement par un lien `mailto:`. Les `LegalTodo` sont des
+ * décisions de la marque, à prendre avant la mise en production.
  */
 export function PrivacyPolicy() {
   return (
@@ -58,52 +58,50 @@ export function PrivacyPolicy() {
 
       <LegalSection id="privacy-data" title="Données collectées">
         <p>
-          Le site ne propose ni compte client, ni commande, ni inscription. Les
-          seules données personnelles concernées sont celles que vous choisissez
-          de transmettre en écrivant à RACINE, par email ou via le formulaire de
-          contact :
+          Ce site ne collecte aucune donnée personnelle : il ne comporte ni
+          formulaire, ni compte client, ni commande, ni inscription.
+        </p>
+        <p>
+          Le seul moyen de contact est l’adresse email de RACINE. Si vous nous
+          écrivez, nous recevons, comme pour tout email :
         </p>
         <ul>
-          <li>votre nom ;</li>
           <li>votre adresse email ;</li>
-          <li>le sujet de votre message ;</li>
-          <li>le contenu de votre message.</li>
+          <li>le contenu de votre message ;</li>
+          <li>les informations que vous choisissez d’y faire figurer.</li>
         </ul>
         <p>
-          <LegalTodo kind="validate">
-            mise en service de l’envoi du formulaire de contact, qui ne transmet
-            aucune donnée à ce jour
-          </LegalTodo>
+          Votre message est envoyé depuis votre propre messagerie : il ne
+          transite pas par ce site.
         </p>
       </LegalSection>
 
       <LegalSection id="privacy-purposes" title="Finalités">
-        <p>Ces données sont utilisées uniquement pour :</p>
+        <p>Les emails reçus sont utilisés uniquement pour :</p>
         <ul>
           <li>répondre aux demandes adressées à RACINE ;</li>
           <li>échanger avec la personne qui a pris contact ;</li>
           <li>traiter les demandes de collaboration ou d’information.</li>
         </ul>
         <p>
-          Elles ne sont ni vendues, ni utilisées à des fins de prospection
-          commerciale ou de publicité.
+          Ces informations ne sont ni vendues, ni utilisées à des fins de
+          prospection commerciale ou de publicité.
         </p>
       </LegalSection>
 
       <LegalSection id="privacy-legal-basis" title="Base légale">
         <p>
           <LegalTodo kind="validate">
-            base légale du traitement des messages de contact
+            base légale du traitement des emails reçus
           </LegalTodo>
         </p>
       </LegalSection>
 
       <LegalSection id="privacy-recipients" title="Destinataires">
         <p>
-          Les messages sont destinés à RACINE EYEWEAR et ne sont consultés que
-          par les personnes chargées d’y répondre.
+          Les emails sont destinés à RACINE EYEWEAR et ne sont consultés que par
+          les personnes chargées d’y répondre.
         </p>
-        <p>Des prestataires techniques peuvent intervenir :</p>
         <dl className="legal-list">
           <div>
             <dt>Hébergement du site</dt>
@@ -112,18 +110,10 @@ export function PrivacyPolicy() {
             </dd>
           </div>
           <div>
-            <dt>Envoi des messages du formulaire</dt>
-            <dd>
-              <LegalTodo>
-                prestataire d’envoi des emails, une fois l’intégration réalisée
-              </LegalTodo>
-            </dd>
-          </div>
-          <div>
             <dt>Transferts hors Union européenne</dt>
             <dd>
               <LegalTodo kind="validate">
-                transferts hors Union européenne selon les prestataires retenus
+                transferts hors Union européenne selon l’hébergeur retenu
               </LegalTodo>
             </dd>
           </div>
@@ -133,7 +123,7 @@ export function PrivacyPolicy() {
       <LegalSection id="privacy-retention" title="Durée de conservation">
         <p>
           <LegalTodo kind="validate">
-            durée de conservation des messages de contact
+            durée de conservation des emails reçus
           </LegalTodo>
         </p>
       </LegalSection>

@@ -129,34 +129,43 @@ describe('Politique de confidentialité', () => {
     ])
   })
 
-  it('ne liste que les données réellement demandées par le formulaire', () => {
-    renderRoute('/politique-de-confidentialite')
+  it('ne décrit que les emails reçus, sans formulaire ni prestataire d’envoi', () => {
+    const { container } = renderRoute('/politique-de-confidentialite')
 
     const data = getSection('Données collectées')
+    expect(data).toHaveTextContent(
+      /ce site ne collecte aucune donnée personnelle/i,
+    )
     expect(
       within(data)
         .getAllByRole('listitem')
         .map((item) => item.textContent),
     ).toEqual([
-      'votre nom ;',
       'votre adresse email ;',
-      'le sujet de votre message ;',
-      'le contenu de votre message.',
+      'le contenu de votre message ;',
+      'les informations que vous choisissez d’y faire figurer.',
     ])
     expect(data).not.toHaveTextContent(/téléphone|adresse postale|naissance/i)
+
+    const page = container.querySelector('.legal-page')
+    expect(page).not.toHaveTextContent(/resend/i)
+    expect(page).not.toHaveTextContent(/prestataire d’envoi/i)
+    expect(page).not.toHaveTextContent(
+      /via le formulaire|depuis le formulaire/i,
+    )
   })
 
-  it('ne tranche pas ce qui reste à décider et ne nomme aucun prestataire non actif', () => {
-    const { container } = renderRoute('/politique-de-confidentialite')
+  it('ne tranche pas ce qui reste à décider', () => {
+    renderRoute('/politique-de-confidentialite')
 
     expect(
       within(getSection('Base légale')).getByText(
-        '[À VALIDER — base légale du traitement des messages de contact]',
+        '[À VALIDER — base légale du traitement des emails reçus]',
       ),
     ).toBeInTheDocument()
     expect(
       within(getSection('Durée de conservation')).getByText(
-        '[À VALIDER — durée de conservation des messages de contact]',
+        '[À VALIDER — durée de conservation des emails reçus]',
       ),
     ).toBeInTheDocument()
     expect(
@@ -164,12 +173,9 @@ describe('Politique de confidentialité', () => {
         '[À COMPLÉTER — raison sociale du responsable du traitement]',
       ),
     ).toBeInTheDocument()
-    expect(getSection('Destinataires')).toHaveTextContent(
-      '[À COMPLÉTER — prestataire d’envoi des emails, une fois l’intégration réalisée]',
-    )
-    expect(container.querySelector('.legal-page')).not.toHaveTextContent(
-      /resend/i,
-    )
+    const recipients = getSection('Destinataires')
+    expect(recipients).toHaveTextContent('[À COMPLÉTER — hébergeur]')
+    expect(within(recipients).queryAllByRole('link')).toHaveLength(0)
   })
 
   it('présente les six droits et l’adresse pour les exercer', () => {
@@ -240,28 +246,6 @@ describe('Accès aux pages légales', () => {
       screen.getByRole('heading', { level: 1, name: title }),
     ).toBeInTheDocument()
     expect(screen.getByRole('banner')).not.toHaveClass('site-header--overlay')
-  })
-
-  it('relie le formulaire de contact à la Politique de confidentialité', async () => {
-    const user = userEvent.setup()
-    renderRoute('/contact')
-
-    const form = screen.getByRole('form', { name: /envoyer\s*un message/i })
-    expect(form).toHaveTextContent(
-      /utilisées\s*uniquement pour répondre à votre demande/i,
-    )
-    const link = within(form).getByRole('link', {
-      name: 'Politique de confidentialité',
-    })
-    expect(link).toHaveAttribute('href', '/politique-de-confidentialite')
-
-    await user.click(link)
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-        name: /politique\s*de confidentialité/i,
-      }),
-    ).toBeInTheDocument()
   })
 
   it('n’expose ni route ni lien Cookies', () => {
