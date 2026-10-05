@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 import { LegalPage, LegalSection } from '../components/sections/legal/LegalPage'
 import { LegalTodo } from '../components/sections/legal/LegalTodo'
-import { contactEmail } from '../data/contact'
+import { contactEmail, mediaCredits } from '../data/contact'
 
 /**
- * Mentions légales. Aucune information d'identification de l'éditeur ou de
- * l'hébergeur ne figure dans les documents du projet : chaque `LegalTodo` est
- * à remplacer par la donnée réelle avant la mise en production.
+ * Mentions légales. L'identité de l'éditeur est celle communiquée par la
+ * marque ; chaque `LegalTodo` restant est à remplacer par la donnée réelle
+ * avant la mise en production.
  */
 export function LegalNotice() {
   return (
@@ -24,33 +24,33 @@ export function LegalNotice() {
         <dl className="legal-list">
           <div>
             <dt>Raison sociale</dt>
-            <dd>
-              <LegalTodo>raison sociale</LegalTodo>
-            </dd>
+            <dd>RACINE</dd>
           </div>
           <div>
             <dt>Forme juridique</dt>
-            <dd>
-              <LegalTodo>forme juridique</LegalTodo>
-            </dd>
+            <dd>SASU</dd>
           </div>
           <div>
             <dt>Capital social</dt>
+            <dd>500 €</dd>
+          </div>
+          <div>
+            <dt>Siège social</dt>
             <dd>
-              <LegalTodo>capital social, s’il s’agit d’une société</LegalTodo>
+              8 rue de la Sablière
+              <br />
+              42380 Saint-Bonnet-le-Château
+              <br />
+              France
             </dd>
           </div>
           <div>
-            <dt>Adresse</dt>
-            <dd>
-              <LegalTodo>adresse du siège</LegalTodo>
-            </dd>
+            <dt>SIRET</dt>
+            <dd>99461164800019</dd>
           </div>
           <div>
-            <dt>SIREN / SIRET</dt>
-            <dd>
-              <LegalTodo>SIREN / SIRET et registre d’immatriculation</LegalTodo>
-            </dd>
+            <dt>RCS</dt>
+            <dd>Saint-Etienne</dd>
           </div>
           <div>
             <dt>TVA intracommunautaire</dt>
@@ -65,10 +65,12 @@ export function LegalNotice() {
             </dd>
           </div>
           <div>
-            <dt>Responsable de publication</dt>
-            <dd>
-              <LegalTodo>responsable de publication</LegalTodo>
-            </dd>
+            <dt>Directeur de la publication</dt>
+            <dd>Carine BEYSSAC</dd>
+          </div>
+          <div>
+            <dt>Site</dt>
+            <dd>www.racineeyewear.fr</dd>
           </div>
         </dl>
       </LegalSection>
@@ -129,9 +131,13 @@ export function LegalNotice() {
       <LegalSection id="legal-credits" title="Crédits">
         <dl className="legal-list">
           <div>
-            <dt>Photographies et vidéos</dt>
+            <dt>Photographes / vidéastes</dt>
             <dd>
-              <LegalTodo>crédits des photographies et des vidéos</LegalTodo>
+              {mediaCredits.map((credit) => (
+                <span className="legal-credit" key={credit}>
+                  {credit}
+                </span>
+              ))}
             </dd>
           </div>
         </dl>

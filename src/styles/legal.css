@@ -159,6 +159,10 @@
   text-transform: uppercase;
 }
 
+.legal-credit {
+  display: block;
+}
+
 .legal-email {
   font-family: var(--font-editorial);
   font-size: clamp(24px, 2.4vw, 32px);

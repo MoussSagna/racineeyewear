@@ -19,6 +19,9 @@ export const socialLinks = [
   },
 ] as const
 
+/** Photographes et vidéastes des images du site. */
+export const mediaCredits = ['@jaydelinspiration', '@nthfly'] as const
+
 export type SocialId = (typeof socialLinks)[number]['id']
 
 /** Pages légales. Le site n'utilisant aucun cookie, il n'a pas de page dédiée. */

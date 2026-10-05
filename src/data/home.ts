@@ -13,7 +13,7 @@ export const craftPillars = [
   },
   {
     title: 'Artisanat',
-    text: 'Des montures façonnées avec précision, des étuis faits main en matière recyclée.',
+    text: 'Des montures façonnées avec précision, des étuis faits main en similicuir.',
   },
   {
     title: 'Matériaux',

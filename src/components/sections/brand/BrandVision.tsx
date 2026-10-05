@@ -1,6 +1,6 @@
 import manPortrait from '../../../assets/images/brand/vision-portrait-01.jpg'
 import womanPortrait from '../../../assets/images/brand/vision-portrait-02.jpg'
-import frameDetail from '../../../assets/images/home/all-power-detail.jpg'
+import motherPortrait from '../../../assets/images/brand/vision-portrait-03.jpg'
 import { ScrollReveal } from '../../ui/ScrollReveal'
 import { BrandEyebrow } from './BrandEyebrow'
 
@@ -11,11 +11,11 @@ const faces = [
   },
   {
     src: womanPortrait,
-    alt: 'Femme aux cheveux bouclés cuivrés, la tête appuyée sur la main, portant une monture rose translucide',
+    alt: 'Femme aux cheveux bouclés cuivrés, la main contre la tempe, portant une large monture carrée rose translucide',
   },
   {
-    src: frameDetail,
-    alt: 'Gros plan sur une monture écaille ALL POWER portée de profil',
+    src: motherPortrait,
+    alt: 'Femme aux longues locks, souriante, en robe aux motifs colorés, portant une monture solaire verte',
   },
 ]
 

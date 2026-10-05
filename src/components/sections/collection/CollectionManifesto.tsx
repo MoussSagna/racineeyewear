@@ -5,7 +5,7 @@ import { CollectionPhoto } from './CollectionPhoto'
 
 export function CollectionManifesto() {
   const { title, chapter, lead, campaign, manifesto } = featuredChapter
-  const [largePhoto, smallPhoto] = manifesto.photos
+  const [largePhoto, echoPhoto, smallPhoto] = manifesto.photos
 
   return (
     <section
@@ -62,6 +62,14 @@ export function CollectionManifesto() {
           variant="unveil"
         >
           <ParallaxImage alt={largePhoto.alt} src={largePhoto.src} />
+        </ScrollReveal>
+
+        <ScrollReveal
+          className="collection-manifesto__photo collection-manifesto__photo--echo"
+          delay={0.15}
+          variant="unveil"
+        >
+          <CollectionPhoto photo={echoPhoto} />
         </ScrollReveal>
 
         <ScrollReveal className="collection-manifesto__statement">

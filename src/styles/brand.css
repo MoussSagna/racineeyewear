@@ -370,7 +370,7 @@
 }
 
 .brand-origins__image img {
-  object-position: 40% 60%;
+  object-position: 50% 92%;
 }
 
 .brand-origins__copy {
@@ -858,12 +858,18 @@
   object-position: 50% 30%;
 }
 
+/* Portrait détouré sur blanc : le blanc se fond dans le crème de la page. */
+.brand-vision__face:nth-child(2) {
+  background: var(--color-cream);
+}
+
 .brand-vision__face:nth-child(2) img {
-  object-position: 55% 30%;
+  mix-blend-mode: multiply;
+  object-position: 50% 40%;
 }
 
 .brand-vision__face:nth-child(3) img {
-  object-position: 62% 36%;
+  object-position: 50% 22%;
 }
 
 @media (min-width: 768px) {

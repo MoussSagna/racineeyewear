@@ -547,6 +547,12 @@ button:focus-visible {
   color: var(--color-ochre);
 }
 
+.footer-credits {
+  color: rgb(255 253 248 / 60%);
+  letter-spacing: 0.08em;
+  text-transform: none;
+}
+
 @media (min-width: 900px) {
   .site-footer {
     padding-top: 80px;

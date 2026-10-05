@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom'
-import { contactEmail, legalLinks, socialLinks } from '../../data/contact'
+import {
+  contactEmail,
+  legalLinks,
+  mediaCredits,
+  socialLinks,
+} from '../../data/contact'
 import { navigationItems } from '../../data/navigation'
 import { Logo } from '../ui/Logo'
 import { ScrollReveal } from '../ui/ScrollReveal'
@@ -61,6 +66,10 @@ export function Footer() {
         <div className="footer-signature">
           <p className="footer-copyright">© RACINE EYEWEAR</p>
           <p className="footer-tagline">La Culture dans chaque regard.</p>
+          <p className="footer-credits">
+            Photos &amp; vidéos <span aria-hidden="true">—</span>{' '}
+            {mediaCredits.join(' · ')}
+          </p>
         </div>
       </div>
     </footer>

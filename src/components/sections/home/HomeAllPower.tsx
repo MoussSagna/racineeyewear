@@ -9,7 +9,7 @@ export function HomeAllPower() {
     <section aria-labelledby="home-allpower-title" className="home-allpower">
       <div className="home-allpower__head">
         <ScrollReveal>
-          <p className="home-eyebrow">Collection Chapter 01</p>
+          <p className="home-eyebrow">Première collection</p>
         </ScrollReveal>
         <ScrollReveal delay={0.08}>
           <h2 className="home-allpower__title" id="home-allpower-title">
@@ -38,7 +38,7 @@ export function HomeAllPower() {
           variant="unveil"
         >
           <img
-            alt="Gros plan sur une monture écaille ALL POWER portée de profil"
+            alt="Photographie en noir et blanc : une femme et un homme en vestes de cuir devant un balcon en fer forgé, montures ALL POWER sur le regard"
             decoding="async"
             loading="lazy"
             src={detailImage}

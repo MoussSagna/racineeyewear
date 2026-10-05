@@ -13,7 +13,7 @@ export function BrandOrigins() {
     >
       <ScrollReveal className="brand-origins__media" variant="unveil">
         <ParallaxImage
-          alt="Monture RACINE en acétate écaille posée sur un muret de pierre, devant un feuillage ensoleillé"
+          alt="Monture ELAINE en acétate écaille posée sur sa chamoisine, sur un muret de pierre, devant un feuillage ensoleillé"
           className="brand-origins__image"
           src={frameImage}
         />

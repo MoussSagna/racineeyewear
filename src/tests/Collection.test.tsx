@@ -139,7 +139,7 @@ describe('Collection', () => {
       within(
         screen.getByRole('list', { name: 'Portraits du Human Book' }),
       ).getAllByRole('img'),
-    ).toHaveLength(8)
+    ).toHaveLength(11)
     expect(
       within(
         screen.getByRole('list', {

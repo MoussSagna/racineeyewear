@@ -15,7 +15,7 @@ export const brandSectionCount = 7
 export const journeySteps = [
   {
     label: '2016',
-    text: 'Je confie à ma mère le souhait de créer un jour ma marque de lunettes.',
+    text: 'Pendant mon BTS, je confie à ma mère le souhait de créer un jour ma marque de lunettes.',
   },
   {
     label: '2019',
@@ -57,7 +57,7 @@ export const racineRoots = [
 export const craftCommitments = [
   {
     title: 'Acétate de cellulose',
-    text: 'Hypoallergénique, souple et résistant, léger et confortable.',
+    text: 'Hypoallergénique, souple, résistant, léger et confortable.',
   },
   {
     title: 'Fabrication française',
@@ -69,6 +69,6 @@ export const craftCommitments = [
   },
   {
     title: 'Artisanat',
-    text: 'Des étuis faits main en matière recyclée, des chutes d’acétate gardées pour être réutilisées.',
+    text: 'Des étuis faits main en similicuir, des chutes d’acétate gardées pour être réutilisées.',
   },
 ] as const

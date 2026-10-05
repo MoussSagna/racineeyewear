@@ -13,7 +13,7 @@ export function HomeBrand() {
             className="home-brand__image"
             src={brandImage}
           />
-          <figcaption>Carine, créatrice de RACINE</figcaption>
+          <figcaption>Carine, la créatrice</figcaption>
         </figure>
       </ScrollReveal>
       <div className="home-brand__copy">

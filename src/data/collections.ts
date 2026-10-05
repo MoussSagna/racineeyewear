@@ -7,6 +7,7 @@ import allPowerCampaign03 from '../assets/images/collection/all-power-campagne-0
 import allPowerChapter from '../assets/images/collection/all-power-chapitre.jpg'
 import allPowerManifesto01 from '../assets/images/collection/all-power-manifeste-01.jpg'
 import allPowerManifesto02 from '../assets/images/collection/all-power-manifeste-02.jpg'
+import allPowerManifesto03 from '../assets/images/collection/all-power-manifeste-03.jpg'
 import allPowerPoster from '../assets/images/collection/all-power-poster.jpg'
 import humanBook01 from '../assets/images/collection/human-book-01.jpg'
 import humanBook02 from '../assets/images/collection/human-book-02.jpg'
@@ -16,6 +17,9 @@ import humanBook05 from '../assets/images/collection/human-book-05.jpg'
 import humanBook06 from '../assets/images/collection/human-book-06.jpg'
 import humanBook07 from '../assets/images/collection/human-book-07.jpg'
 import humanBook08 from '../assets/images/collection/human-book-08.jpg'
+import humanBook09 from '../assets/images/collection/human-book-09.jpg'
+import humanBook10 from '../assets/images/collection/human-book-10.jpg'
+import humanBook11 from '../assets/images/collection/human-book-11.jpg'
 import finishBlack from '../assets/images/collection/matiere-noir.jpg'
 import finishTortoise from '../assets/images/collection/matiere-ecaille.jpg'
 import frameElaine from '../assets/images/collection/monture-elaine.jpg'
@@ -81,7 +85,8 @@ export type AvailableChapter = ChapterBase & {
     statement: string
     paragraphs: string[]
     themes: string[]
-    photos: [Photo, Photo]
+    /** Grande photographie, son écho en noir et blanc, puis le portrait. */
+    photos: [Photo, Photo, Photo]
   }
   chapterNote: { lines: string[]; foundation: string; photo: Photo }
   frames: { intro: string[]; items: Frame[] }
@@ -142,9 +147,15 @@ const allPowerChapter01: AvailableChapter = {
     photos: [
       {
         src: allPowerManifesto01,
-        alt: 'Dans une boutique aux lumières chaudes, un homme et une femme en cuir feuillettent un journal, lunettes ALL POWER sur le nez',
-        width: 1066,
-        height: 1600,
+        alt: 'Dans une boutique de disques aux lumières chaudes, un homme et une femme en cuir feuillettent un magazine, lunettes ALL POWER sur le nez',
+        width: 1200,
+        height: 2116,
+      },
+      {
+        src: allPowerManifesto03,
+        alt: 'Portrait en noir et blanc d’une femme en veste de cuir accoudée à une rampe, le menton sur la main, lunettes ALL POWER sur le regard',
+        width: 1000,
+        height: 1763,
       },
       {
         src: allPowerManifesto02,
@@ -163,9 +174,9 @@ const allPowerChapter01: AvailableChapter = {
     foundation: 'Avec ce premier chapitre, RACINE pose ses fondations.',
     photo: {
       src: allPowerChapter,
-      alt: 'Photographie en noir et blanc : un homme et une femme assis côte à côte sous une fenêtre en arche aux volets clos',
-      width: 824,
-      height: 1500,
+      alt: 'Photographie en noir et blanc : un homme en casquette et veste de cuir, de profil, et une femme qui rit derrière lui, lunettes ALL POWER sur le nez',
+      width: 1100,
+      height: 1937,
     },
   },
   frames: {
@@ -239,7 +250,7 @@ const allPowerChapter01: AvailableChapter = {
         name: 'Shakur',
         photo: {
           src: frameShakur,
-          alt: 'Les montures SHAKUR noire et écaille, rondes, posées l’une sur l’autre sur un muret de pierre',
+          alt: 'Les montures SHAKUR noire et écaille, rondes, posées sur leur étui et une chamoisine RACINE, sur un muret de pierre',
           width: 1350,
           height: 1800,
         },
@@ -277,8 +288,8 @@ const allPowerChapter01: AvailableChapter = {
         photo: {
           src: finishBlack,
           alt: 'Gros plan sur une monture noire ELAINE posée sur la pierre, devant un feuillage',
-          width: 1350,
-          height: 1800,
+          width: 1410,
+          height: 1998,
         },
       },
       {
@@ -336,21 +347,39 @@ export const humanBook = {
   portraits: [
     {
       src: humanBook01,
-      alt: 'Femme aux cheveux bouclés, baignée de soleil, la main sous le menton, portant une monture rose translucide',
-      width: 731,
+      alt: 'Femme souriante, la main sur le cœur, portant une monture solaire aux reflets verts',
+      width: 975,
       height: 1300,
     },
     {
       src: humanBook02,
-      alt: 'Portrait en noir et blanc d’un homme souriant de profil, monture noire épaisse sur le nez',
-      width: 869,
-      height: 1300,
+      alt: 'Portrait serré en noir et blanc d’un homme qui rit, les yeux plissés derrière une monture noire épaisse',
+      width: 975,
+      height: 1459,
     },
     {
       src: humanBook03,
-      alt: 'Femme coiffée d’un foulard orange, de profil, portant une monture sombre',
+      alt: 'Femme coiffée d’un foulard orange, souriante, portant une monture sombre aux verres miroir',
       width: 975,
       height: 1300,
+    },
+    {
+      src: humanBook09,
+      alt: 'Femme aux longs cheveux bouclés, accroupie devant un mur rouge, portant une monture aux verres jaunes',
+      width: 975,
+      height: 1300,
+    },
+    {
+      src: humanBook10,
+      alt: 'Homme en casquette, tout sourire sur la plage, portant une monture translucide aux verres miroir',
+      width: 975,
+      height: 1300,
+    },
+    {
+      src: humanBook11,
+      alt: 'Deux amies souriantes, côte à côte au soleil, lunettes de soleil sur le nez',
+      width: 975,
+      height: 1463,
     },
     {
       src: humanBook04,
@@ -388,6 +417,10 @@ export const humanBook = {
 export const summerCollection = {
   id: 'summer',
   title: 'Summer Collection',
+  collaboration: {
+    lead: 'Collaboration avec la marque de bijoux upcyclés artisanale',
+    partner: 'Facette by Nat',
+  },
   photos: [
     {
       src: summer02,
@@ -403,21 +436,21 @@ export const summerCollection = {
     },
     {
       src: summer03,
-      alt: 'Femme aux cheveux bouclés devant le ciel bleu, le visage tourné vers le soleil, monture verte translucide',
-      width: 844,
-      height: 1500,
-    },
-    {
-      src: summer05,
-      alt: 'Femme allongée sur une serviette de plage, les mains sur les joues, lunettes de soleil sur le nez',
-      width: 1000,
-      height: 1500,
+      alt: 'Deux visages allongés au soleil sur la plage, lunettes de soleil rouges et boucle d’oreille en tissu madras',
+      width: 1200,
+      height: 1669,
     },
     {
       src: summer04,
-      alt: 'Vue de dessus : deux femmes étendues sur le sable blanc, lunettes de soleil sur le regard',
+      alt: 'Profil en gros plan d’une femme aux fines tresses, monture rose aux verres miroir',
       width: 1000,
-      height: 1500,
+      height: 1778,
+    },
+    {
+      src: summer05,
+      alt: 'Femme de profil allongée sur le sable, en maillot coloré, lunettes de soleil écaille sur le nez',
+      width: 1000,
+      height: 1778,
     },
   ] satisfies Photo[],
 }

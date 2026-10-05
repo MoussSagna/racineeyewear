@@ -27,6 +27,12 @@ export function SummerCollectionSection() {
             Summer <em>Collection</em>
           </h2>
         </ScrollReveal>
+        <ScrollReveal delay={0.2}>
+          <p className="collection-summer__collaboration">
+            {summerCollection.collaboration.lead}{' '}
+            <em>{summerCollection.collaboration.partner}</em>
+          </p>
+        </ScrollReveal>
       </div>
 
       <ul

@@ -8,7 +8,7 @@ export function BrandRoots() {
     <section aria-labelledby="brand-roots-title" className="brand-roots">
       <ScrollReveal className="brand-roots__media" variant="unveil">
         <img
-          alt="Deux montures RACINE, noire et écaille, posées avec leur étui sur une chamoisine marquée du logo RACINE"
+          alt="Montures RACINE en acétate écaille et noir, verres teintés, posées sur une platine vinyle"
           decoding="async"
           loading="lazy"
           src={rootsImage}

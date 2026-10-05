@@ -28,6 +28,7 @@
 }
 
 .collection-manifesto__campaign-photo img,
+.collection-manifesto__photo--echo img,
 .collection-manifesto__photo--small img,
 .collection-frames__photo img,
 .collection-frames__finishes img,
@@ -406,6 +407,23 @@
   height: 100%;
 }
 
+.collection-manifesto__photo--large img {
+  object-position: 50% 10%;
+}
+
+/* Écho en noir et blanc, glissé sous la grande photographie. */
+.collection-manifesto__photo--echo {
+  width: 58%;
+  margin-top: -40px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  justify-self: end;
+}
+
+.collection-manifesto__photo--echo img {
+  object-position: 50% 30%;
+}
+
 .collection-manifesto__statement {
   color: var(--color-primary);
   font-family: var(--font-editorial);
@@ -488,6 +506,13 @@
 
   .collection-manifesto__photo--large {
     grid-column: 7 / span 6;
+  }
+
+  .collection-manifesto__photo--echo {
+    width: auto;
+    margin-top: calc(clamp(72px, 9vw, 144px) * -1 + 32px);
+    grid-column: 8 / span 3;
+    justify-self: stretch;
   }
 
   .collection-manifesto__statement {
@@ -1067,6 +1092,22 @@
   display: block;
   padding-left: 12%;
   color: var(--color-brown);
+}
+
+.collection-summer__collaboration {
+  max-width: 34ch;
+  margin-top: clamp(24px, 3vw, 40px);
+  padding-top: 16px;
+  border-top: 1px solid rgb(38 53 26 / 30%);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.collection-summer__collaboration em {
+  color: var(--color-brown);
+  font-family: var(--font-editorial);
+  font-size: 1.3em;
+  white-space: nowrap;
 }
 
 .collection-summer__gallery {

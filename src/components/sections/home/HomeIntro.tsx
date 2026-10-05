@@ -8,13 +8,13 @@ export function HomeIntro() {
       </ScrollReveal>
       <h2 className="home-intro__statement" id="home-intro-title">
         <ScrollReveal as="span" className="home-intro__line">
-          La culture
+          Sortir
         </ScrollReveal>{' '}
         <ScrollReveal as="span" className="home-intro__line" delay={0.1}>
-          dans chaque
+          des
         </ScrollReveal>{' '}
         <ScrollReveal as="span" className="home-intro__line" delay={0.2}>
-          <em>regard.</em>
+          <em>standards.</em>
         </ScrollReveal>
       </h2>
       <ScrollReveal className="home-intro__copy" delay={0.25}>

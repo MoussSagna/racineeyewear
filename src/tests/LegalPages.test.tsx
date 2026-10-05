@@ -54,23 +54,42 @@ describe('Mentions légales', () => {
 
     const publisher = getSection('Éditeur du site')
     for (const todo of [
-      '[À COMPLÉTER — raison sociale]',
-      '[À COMPLÉTER — forme juridique]',
-      '[À COMPLÉTER — adresse du siège]',
-      '[À COMPLÉTER — SIREN / SIRET et registre d’immatriculation]',
       '[À COMPLÉTER — numéro de TVA, si applicable]',
-      '[À COMPLÉTER — responsable de publication]',
+      '[À COMPLÉTER — numéro de téléphone]',
     ]) {
       expect(within(publisher).getByText(todo)).toBeInTheDocument()
     }
     expect(
       within(getSection('Hébergement')).getByText('[À COMPLÉTER — hébergeur]'),
     ).toBeInTheDocument()
-    expect(
-      within(getSection('Crédits')).getByText(
-        '[À COMPLÉTER — crédits des photographies et des vidéos]',
-      ),
-    ).toBeInTheDocument()
+  })
+
+  it('identifie l’éditeur du site', () => {
+    renderRoute('/mentions-legales')
+
+    const publisher = getSection('Éditeur du site')
+    for (const value of [
+      'RACINE',
+      'SASU',
+      '500 €',
+      '99461164800019',
+      'Saint-Etienne',
+      'Carine BEYSSAC',
+      'www.racineeyewear.fr',
+    ]) {
+      expect(within(publisher).getByText(value)).toBeInTheDocument()
+    }
+    expect(publisher).toHaveTextContent(
+      '8 rue de la Sablière42380 Saint-Bonnet-le-ChâteauFrance',
+    )
+  })
+
+  it('crédite les photographes et vidéastes', () => {
+    renderRoute('/mentions-legales')
+
+    const credits = getSection('Crédits')
+    expect(within(credits).getByText('@jaydelinspiration')).toBeInTheDocument()
+    expect(within(credits).getByText('@nthfly')).toBeInTheDocument()
   })
 
   it('donne l’email de contact, cliquable', () => {
