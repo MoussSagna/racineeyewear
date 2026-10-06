@@ -95,7 +95,7 @@ describe('Contact', () => {
     ).toBeInTheDocument()
   })
 
-  it('enchaîne les sections sans vide : email, réseaux, manifeste, image', () => {
+  it('enchaîne les sections sans vide : email, réseaux, image', () => {
     const { container } = renderRoute('/contact')
 
     expect(
@@ -106,7 +106,6 @@ describe('Contact', () => {
       'contact-hero',
       'contact-email',
       'contact-socials',
-      'contact-manifesto',
       'contact-closing',
     ])
   })
@@ -133,20 +132,21 @@ describe('Contact', () => {
     expect(within(section).getAllByRole('link')).toHaveLength(2)
   })
 
-  it('reprend le manifeste officiel et la signature finale', () => {
-    renderRoute('/contact')
+  it('termine sur la signature finale, sans section manifeste', () => {
+    const { container } = renderRoute('/contact')
 
+    expect(container.querySelector('.contact-manifesto')).toBeNull()
     expect(
-      screen.getByRole('heading', {
+      screen.queryByRole('heading', {
         level: 2,
         name: /la culture\s*dans chaque\s*regard\./i,
       }),
-    ).toBeInTheDocument()
+    ).toBeNull()
     expect(
-      screen.getByText(
+      screen.queryByText(
         /parce que porter des lunettes, ce n’est pas seulement voir\./i,
       ),
-    ).toHaveTextContent('C’est aussi se reconnaître.')
+    ).toBeNull()
 
     const closing = screen.getByRole('region', { name: 'RACINE' })
     expect(within(closing).getAllByRole('img')).toHaveLength(2)

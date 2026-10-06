@@ -642,6 +642,11 @@
   height: 100%;
 }
 
+/* Les sujets sont assis au bas du cadre : on cale la photographie en bas. */
+.collection-chapter__image img {
+  object-position: 50% 100%;
+}
+
 @media (min-width: 1024px) {
   .collection-chapter {
     align-items: center;
@@ -1222,50 +1227,4 @@
 .collection-future__chapter--upcoming .collection-future__name {
   color: transparent;
   -webkit-text-stroke: 1px rgb(245 232 210 / 70%);
-}
-
-/* Conclusion */
-
-.collection-closing {
-  display: grid;
-  justify-items: center;
-  padding: var(--section-y) var(--gutter);
-  border-bottom: 1px solid rgb(245 232 210 / 12%);
-  background: var(--color-ink);
-  color: var(--color-cream);
-  text-align: center;
-}
-
-.collection-closing__statement {
-  max-width: 20ch;
-  font-family: var(--font-editorial);
-  font-size: clamp(30px, 5vw, 88px);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.04;
-  text-transform: uppercase;
-}
-
-.collection-closing__statement > span {
-  display: block;
-}
-
-.collection-closing__statement > span:last-child {
-  margin-top: 0.3em;
-  color: var(--color-ochre);
-}
-
-.collection-closing__signature {
-  display: grid;
-  justify-items: center;
-  margin-block: clamp(48px, 6vw, 88px) 36px;
-  row-gap: 16px;
-}
-
-.collection-closing__logo {
-  width: clamp(160px, 15vw, 220px);
-}
-
-.collection-closing__signature .collection-label {
-  color: var(--color-ochre);
 }

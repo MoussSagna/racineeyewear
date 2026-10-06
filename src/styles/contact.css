@@ -341,59 +341,6 @@
   }
 }
 
-/* Manifeste */
-
-.contact-manifesto {
-  display: grid;
-  padding: var(--section-y) var(--gutter);
-  background: var(--color-primary);
-  color: var(--color-cream);
-  row-gap: clamp(40px, 6vw, 88px);
-}
-
-.contact-manifesto__title {
-  font-family: var(--font-editorial);
-  font-size: clamp(52px, 12vw, 216px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 0.86;
-  text-transform: uppercase;
-}
-
-.contact-manifesto__title > span {
-  display: block;
-}
-
-.contact-manifesto__title > span:nth-child(2) {
-  padding-left: 9%;
-}
-
-.contact-manifesto__title > span:nth-child(3) {
-  padding-left: 22%;
-  color: var(--color-ochre);
-}
-
-.contact-manifesto__quote {
-  max-width: 30ch;
-  padding-top: 24px;
-  border-top: 1px solid rgb(245 232 210 / 28%);
-  font-family: var(--font-editorial);
-  font-size: clamp(24px, 2.5vw, 40px);
-  font-style: italic;
-  line-height: 1.2;
-}
-
-.contact-manifesto__quote span {
-  display: block;
-  color: var(--color-ochre);
-}
-
-@media (min-width: 900px) {
-  .contact-manifesto__quote {
-    justify-self: end;
-  }
-}
-
 /* Image de fin */
 
 .contact-closing {

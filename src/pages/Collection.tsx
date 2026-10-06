@@ -1,5 +1,4 @@
 import { CollectionChapter } from '../components/sections/collection/CollectionChapter'
-import { CollectionClosing } from '../components/sections/collection/CollectionClosing'
 import { CollectionFrames } from '../components/sections/collection/CollectionFrames'
 import { CollectionHero } from '../components/sections/collection/CollectionHero'
 import { CollectionManifesto } from '../components/sections/collection/CollectionManifesto'
@@ -21,7 +20,6 @@ export function Collection() {
       <HumanBookSection />
       <SummerCollectionSection />
       <FutureChapters />
-      <CollectionClosing />
     </div>
   )
 }

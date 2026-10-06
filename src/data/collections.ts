@@ -91,7 +91,6 @@ export type AvailableChapter = ChapterBase & {
   chapterNote: { lines: string[]; foundation: string; photo: Photo }
   frames: { intro: string[]; items: Frame[] }
   finishes: { statement: string; items: Finish[] }
-  closing: string[]
 }
 
 /** Chapitre annoncé : aucun contenu tant que la marque ne l'a pas dévoilé. */
@@ -147,9 +146,9 @@ const allPowerChapter01: AvailableChapter = {
     photos: [
       {
         src: allPowerManifesto01,
-        alt: 'Dans une boutique de disques aux lumières chaudes, un homme et une femme en cuir feuillettent un magazine, lunettes ALL POWER sur le nez',
+        alt: 'Dans une boutique de disques aux lumières chaudes, un homme en casquette et une femme, tous deux en cuir, feuillettent un magazine, lunettes ALL POWER sur le nez',
         width: 1200,
-        height: 2116,
+        height: 1800,
       },
       {
         src: allPowerManifesto03,
@@ -174,9 +173,9 @@ const allPowerChapter01: AvailableChapter = {
     foundation: 'Avec ce premier chapitre, RACINE pose ses fondations.',
     photo: {
       src: allPowerChapter,
-      alt: 'Photographie en noir et blanc : un homme en casquette et veste de cuir, de profil, et une femme qui rit derrière lui, lunettes ALL POWER sur le nez',
-      width: 1100,
-      height: 1937,
+      alt: 'Photographie en noir et blanc : un homme en casquette et une femme qui rit, en cuir, assis sur un banc sous une fenêtre cintrée aux volets clos, lunettes ALL POWER sur le nez',
+      width: 1058,
+      height: 1925,
     },
   },
   frames: {
@@ -306,10 +305,6 @@ const allPowerChapter01: AvailableChapter = {
       },
     ],
   },
-  closing: [
-    'Nos histoires ne sont pas seulement à transmettre.',
-    'Elles sont aussi à réinventer.',
-  ],
 }
 
 /**

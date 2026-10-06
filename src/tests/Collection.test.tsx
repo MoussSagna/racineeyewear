@@ -67,7 +67,6 @@ describe('Collection', () => {
       /human book/i,
       /summer\s*collection/i,
       /the story continues\./i,
-      /nos histoires ne sont pas seulement à transmettre\.\s*elles sont aussi à réinventer\./i,
     ]) {
       expect(
         screen.getByRole('heading', { level: 2, name }),
@@ -191,23 +190,14 @@ describe('Collection', () => {
     expect(screen.getByRole('banner')).toHaveClass('site-header--overlay')
   })
 
-  it('renvoie vers La marque depuis la conclusion', async () => {
-    const user = userEvent.setup()
-    renderRoute('/collection')
+  it('se termine sur les futurs chapitres, sans bloc de conclusion', () => {
+    const { container } = renderRoute('/collection')
+    const page = container.querySelector<HTMLElement>('.collection-page')!
 
-    const closing = screen.getByRole('region', {
-      name: /nos histoires ne sont pas seulement à transmettre/i,
-    })
-    const link = within(closing).getByRole('link', { name: /la marque/i })
-    expect(link).toHaveAttribute('href', '/la-marque')
-
-    await user.click(link)
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-        name: /une histoire\s*de regard\./i,
-      }),
-    ).toBeInTheDocument()
+    expect(page.lastElementChild).toHaveClass('collection-future')
+    expect(page.querySelector('.collection-closing')).toBeNull()
+    expect(page).not.toHaveTextContent(/nos histoires ne sont pas seulement/i)
+    expect(within(page).queryByRole('link', { name: /la marque/i })).toBeNull()
   })
 
   it('est accessible depuis la homepage', async () => {
