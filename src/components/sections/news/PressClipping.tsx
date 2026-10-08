@@ -64,6 +64,11 @@ export function PressClipping({
       {showCaption && (
         <figcaption className="news-clipping__caption">
           {image.caption}
+          {image.publication && (
+            <span className="news-clipping__publication">
+              {image.publication}
+            </span>
+          )}
         </figcaption>
       )}
     </motion.figure>

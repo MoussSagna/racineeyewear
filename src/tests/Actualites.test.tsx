@@ -109,6 +109,9 @@ describe('Article', () => {
     expect(
       within(article).getByRole('img', { name: /coupure de presse/i }),
     ).toBeInTheDocument()
+    expect(article.querySelector('.news-clipping__caption')?.textContent).toBe(
+      'Archive de presse — Texte et photo Ève Robertle Progrès - Forez',
+    )
     expect(document.title).toBe(`${articleTitle} — RACINE`)
   })
 

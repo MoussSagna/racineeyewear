@@ -68,6 +68,12 @@
   text-transform: uppercase;
 }
 
+/* Même style que le crédit, sans capitales : le titre garde sa graphie d'origine. */
+.news-clipping__publication {
+  display: block;
+  text-transform: none;
+}
+
 /* Hero Actualités — mobile : texte puis photographie */
 
 .news-hero {

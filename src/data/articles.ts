@@ -31,6 +31,8 @@ export type ArticleImage = {
   width: number
   height: number
   caption: string
+  /** Publication d'origine, affichée sous le crédit. */
+  publication?: string
   /** `press` : coupure de journal, montrée entière comme une archive. */
   kind: 'press' | 'photo'
 }
@@ -93,6 +95,7 @@ const allArticles: Article[] = [
       width: 1800,
       height: 1800,
       caption: 'Archive de presse — Texte et photo Ève Robert',
+      publication: 'le Progrès - Forez',
       kind: 'press',
     },
     intro:

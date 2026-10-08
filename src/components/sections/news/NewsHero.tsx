@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react'
-import heroImage from '../../../assets/images/collection/all-power-manifeste-01.jpg'
+import heroImage from '../../../assets/images/actualites/hero-magazine.jpg'
 import { easeOutSoft } from '../../../lib/motion'
 
 const titleLines = ['Les histoires', 'qui font vivre', 'RACINE.'] as const

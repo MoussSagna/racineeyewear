@@ -146,8 +146,8 @@ const allPowerChapter01: AvailableChapter = {
     photos: [
       {
         src: allPowerManifesto01,
-        alt: 'Dans une boutique de disques aux lumières chaudes, un homme en casquette et une femme, tous deux en cuir, feuillettent un magazine, lunettes ALL POWER sur le nez',
-        width: 1200,
+        alt: 'Sur un escalier de Montmartre, une femme en long manteau de cuir ajuste sa monture ALL POWER aux côtés d’un homme en casquette et blouson de cuir, lunettes aux verres ambrés sur le nez',
+        width: 1199,
         height: 1800,
       },
       {
