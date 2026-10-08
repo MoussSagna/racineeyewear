@@ -24,6 +24,7 @@ describe('Footer', () => {
       ['Accueil', '/'],
       ['La marque', '/la-marque'],
       ['Collection', '/collection'],
+      ['Actualités', '/actualites'],
       ['Contact', '/contact'],
     ]) {
       expect(within(navigation).getByRole('link', { name })).toHaveAttribute(

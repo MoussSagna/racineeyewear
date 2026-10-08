@@ -28,7 +28,8 @@ Navigation desktop et mobile :
 1. Accueil
 2. La marque
 3. Collection
-4. Contact
+4. Actualités
+5. Contact
 
 Le logo RACINE renvoie vers Accueil.
 
@@ -39,6 +40,8 @@ La navigation doit rester simple, éditoriale et premium.
 - `/` → Accueil
 - `/la-marque` → La marque
 - `/collection` → Collection ALL POWER
+- `/actualites` → Actualités (articles décrits dans `src/data/articles.ts`)
+- `/actualites/:slug` → Article
 - `/contact` → Contact
 
 Les pages secondaires pourront être enrichies par sprints successifs.

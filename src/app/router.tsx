@@ -1,5 +1,7 @@
 import { createBrowserRouter, type RouteObject } from 'react-router-dom'
 import { SiteLayout } from '../components/layout/SiteLayout'
+import { Actualites } from '../pages/Actualites'
+import { Article } from '../pages/Article'
 import { Brand } from '../pages/Brand'
 import { Collection } from '../pages/Collection'
 import { Contact } from '../pages/Contact'
@@ -14,6 +16,8 @@ export const routes: RouteObject[] = [
       { path: '/', element: <Home /> },
       { path: '/la-marque', element: <Brand /> },
       { path: '/collection', element: <Collection /> },
+      { path: '/actualites', element: <Actualites /> },
+      { path: '/actualites/:slug', element: <Article /> },
       { path: '/contact', element: <Contact /> },
       { path: '/mentions-legales', element: <LegalNotice /> },
       { path: '/politique-de-confidentialite', element: <PrivacyPolicy /> },

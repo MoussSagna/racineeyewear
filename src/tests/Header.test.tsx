@@ -21,7 +21,7 @@ afterEach(() => {
 })
 
 describe('Header', () => {
-  it('affiche les quatre liens de navigation principaux', () => {
+  it('affiche les cinq liens de navigation principaux', () => {
     render(
       <MemoryRouter>
         <Header />
@@ -43,6 +43,10 @@ describe('Header', () => {
     expect(screen.getByRole('link', { name: 'Collection' })).toHaveAttribute(
       'href',
       '/collection',
+    )
+    expect(screen.getByRole('link', { name: 'Actualités' })).toHaveAttribute(
+      'href',
+      '/actualites',
     )
     expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute(
       'href',
@@ -71,7 +75,7 @@ describe('Header', () => {
       within(
         screen.getByRole('navigation', { name: 'Navigation principale' }),
       ).getAllByRole('link'),
-    ).toHaveLength(4)
+    ).toHaveLength(5)
 
     scrollTo(0)
     expect(header).not.toHaveClass('site-header--scrolled')
@@ -210,6 +214,9 @@ describe('Header', () => {
     expect(
       within(mobileNavigation).getByRole('link', { name: 'Collection' }),
     ).toHaveAttribute('href', '/collection')
+    expect(
+      within(mobileNavigation).getByRole('link', { name: 'Actualités' }),
+    ).toHaveAttribute('href', '/actualites')
     expect(
       within(mobileNavigation).getByRole('link', { name: 'Contact' }),
     ).toHaveAttribute('href', '/contact')
