@@ -29,9 +29,8 @@ export function BrandCommitment() {
         </ScrollReveal>
         <ScrollReveal delay={0.16}>
           <p className="brand-commitment__text">
-            RACINE, ce n’est pas pour exclure mais pour élargir la norme. Chaque
-            visage mérite d’être mis en lumière. Parce que porter des lunettes,
-            ce n’est pas seulement voir. C’est aussi se reconnaître.
+            RACINE, ce n’est pas pour exclure mais pour élargir la norme. Un
+            univers où on se sent vu, compris et valorisé.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={0.24}>
