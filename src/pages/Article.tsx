@@ -2,7 +2,6 @@ import { ArrowLeft } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArticleHero } from '../components/sections/news/ArticleHero'
 import { ArticleSections } from '../components/sections/news/ArticleSections'
-import { ArticleVideo } from '../components/sections/news/ArticleVideo'
 import { ScrollReveal } from '../components/ui/ScrollReveal'
 import { getArticle } from '../data/articles'
 import { usePageDescription } from '../lib/usePageDescription'
@@ -15,31 +14,23 @@ export function Article() {
 
   if (!article) return <Navigate replace to="/actualites" />
 
-  const { sections, video } = article
-  // La vidéo coupe le récit en deux ; sans vidéo, tout tient dans le premier groupe.
-  const videoIndex = video
-    ? sections.findIndex((section) => section.id === video.afterSection) + 1
-    : sections.length
-  const splitIndex = videoIndex > 0 ? videoIndex : sections.length
-
   return (
     <article aria-labelledby="article-title" className="article-page">
       <title>{`${article.title} — RACINE`}</title>
       <ArticleHero article={article} />
 
-      <ScrollReveal className="article-intro">
-        <p>{article.intro}</p>
-      </ScrollReveal>
+      <div className="article-intro">
+        <ScrollReveal>
+          <p className="article-intro__lede">{article.intro}</p>
+        </ScrollReveal>
+        {article.body?.map((paragraph, index) => (
+          <ScrollReveal delay={0.08 + index * 0.06} key={paragraph}>
+            <p className="article-text">{paragraph}</p>
+          </ScrollReveal>
+        ))}
+      </div>
 
-      <ArticleSections
-        sections={sections.slice(0, splitIndex)}
-        startIndex={0}
-      />
-      {video && <ArticleVideo video={video} />}
-      <ArticleSections
-        sections={sections.slice(splitIndex)}
-        startIndex={splitIndex}
-      />
+      <ArticleSections sections={article.sections} startIndex={0} />
 
       <footer className="article-end">
         {article.source && (

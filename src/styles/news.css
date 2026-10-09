@@ -241,7 +241,8 @@
   line-height: 1.75;
 }
 
-.news-feature__cta {
+.news-feature__cta,
+.news-item__cta {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
@@ -255,12 +256,15 @@
   text-transform: uppercase;
 }
 
-.news-feature__cta svg {
+.news-feature__cta svg,
+.news-item__cta svg {
   transition: transform 260ms ease;
 }
 
 .news-feature__card:hover .news-feature__cta svg,
-.news-feature__card:focus-within .news-feature__cta svg {
+.news-feature__card:focus-within .news-feature__cta svg,
+.news-item:hover .news-item__cta svg,
+.news-item:focus-within .news-item__cta svg {
   transform: translateX(5px);
 }
 
@@ -355,14 +359,12 @@
   line-height: 1.7;
 }
 
-.news-item__arrow {
+.news-item__cta {
   margin-top: 16px;
-  color: var(--color-brown);
-  transition: transform 260ms ease;
 }
 
-.news-item:hover .news-item__arrow {
-  transform: translateX(5px);
+.news-item:hover .news-item__title {
+  color: var(--color-brown);
 }
 
 @media (min-width: 700px) {
@@ -374,6 +376,43 @@
 @media (min-width: 1100px) {
   .news-list__items {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Un seul article à la suite de la une : il prend la largeur, image et texte côte à côte. */
+
+@media (min-width: 700px) {
+  .news-list__items > li:only-child {
+    grid-column: 1 / -1;
+  }
+
+  .news-list__items > li:only-child .news-item {
+    display: grid;
+    align-items: end;
+    column-gap: clamp(32px, 5vw, 96px);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .news-list__items > li:only-child .news-item__media {
+    margin-bottom: 0;
+    aspect-ratio: 16 / 9;
+  }
+
+  .news-list__items > li:only-child .news-item__title {
+    margin-top: 20px;
+    font-size: clamp(34px, 3.9vw, 64px);
+    letter-spacing: -0.01em;
+    line-height: 1.02;
+  }
+
+  .news-list__items > li:only-child .news-item__excerpt {
+    max-width: 48ch;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .news-list__items > li:only-child .news-item__cta {
+    margin-top: 24px;
   }
 }
 
@@ -450,7 +489,7 @@
   padding: var(--section-y) var(--gutter) clamp(40px, 5vw, 80px);
 }
 
-.article-intro p {
+.article-intro__lede {
   max-width: 24em;
   color: var(--color-primary);
   font-family: var(--font-editorial);
@@ -458,6 +497,10 @@
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.14;
+}
+
+.article-intro .article-text {
+  margin: clamp(28px, 3vw, 44px) 0 0;
 }
 
 /* Article — chapitres */
@@ -538,35 +581,32 @@
   }
 }
 
-/* Article — vidéo, en grande largeur, dans son ratio natif */
+/* Article vidéo — Hero : le film tient lieu d'image, dans son ratio natif */
+
+.article-hero--video {
+  padding-bottom: 48px;
+  background: var(--color-ink);
+}
+
+.article-hero--video .article-hero__copy {
+  display: block;
+}
+
+.article-hero--video .article-hero__title {
+  max-width: none;
+  font-size: clamp(50px, 9vw, 148px);
+}
+
+.article-hero__video {
+  margin-top: clamp(40px, 5vw, 72px);
+}
 
 .article-video {
-  margin-block: clamp(24px, 4vw, 64px);
-  padding: var(--section-y) var(--gutter);
-  background: var(--color-ink);
-  color: var(--color-cream);
-}
-
-.article-video .news-kicker {
-  color: var(--color-ochre);
-}
-
-.article-video__heading,
-.article-video__figure {
   max-width: 1400px;
   margin-inline: auto;
 }
 
-.article-video__title {
-  margin: 16px 0 clamp(32px, 4vw, 64px);
-  font-family: var(--font-editorial);
-  font-size: clamp(40px, 6vw, 96px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 0.98;
-}
-
-.article-video__figure video {
+.article-video video {
   display: block;
   width: 100%;
   height: auto;
@@ -575,10 +615,53 @@
 
 .article-video__frame {
   position: relative;
+  z-index: 0;
 }
 
-.article-video__figure video:not(:fullscreen) {
+.article-video video:not(:fullscreen) {
   cursor: pointer;
+}
+
+.article-video--portrait {
+  max-width: min(100%, 480px);
+}
+
+.article-video figcaption {
+  max-width: 72ch;
+  margin-top: 20px;
+  color: rgb(245 232 210 / 78%);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* Grand écran : le film est à cheval sur le papier clair, comme l'archive de presse. */
+
+@media (min-width: 1100px) {
+  .article-hero--video {
+    padding-bottom: 0;
+  }
+
+  .article-hero--video .article-video__frame::before {
+    position: absolute;
+    z-index: -1;
+    top: 62%;
+    /* Dépasse sous la légende : pas de filet sombre entre les deux aplats. */
+    bottom: -2px;
+    left: 50%;
+    width: 100vw;
+    background: var(--color-cream);
+    content: '';
+    transform: translateX(-50%);
+  }
+
+  .article-hero--video .article-video figcaption {
+    margin-top: 0;
+    padding-top: 20px;
+    background: var(--color-cream);
+    box-shadow: 0 0 0 100vmax var(--color-cream);
+    clip-path: inset(0 -100vmax -2px);
+    color: rgb(23 23 17 / 72%);
+  }
 }
 
 /* Contrôles dans la page : lecture et plein écran, rien d'autre. Le son se règle en plein écran. */
@@ -591,9 +674,9 @@
   gap: 12px;
 }
 
-/* Petit écran : sous l'image, pour ne pas masquer les sous-titres incrustés. Au-delà : posés dessus. */
+/* Petit écran et tablette : sous l'image, pour ne pas masquer les sous-titres incrustés. Au-delà : posés dessus. */
 
-@media (min-width: 640px) {
+@media (min-width: 1100px) {
   .article-video__controls {
     position: absolute;
     right: 0;
@@ -658,18 +741,6 @@
 
 .article-video__hint svg {
   flex: none;
-}
-
-.article-video__figure--portrait {
-  max-width: min(100%, 480px);
-}
-
-.article-video__figure figcaption {
-  max-width: 72ch;
-  margin-top: 20px;
-  color: rgb(245 232 210 / 78%);
-  font-size: 13px;
-  line-height: 1.7;
 }
 
 /* Article — fin */

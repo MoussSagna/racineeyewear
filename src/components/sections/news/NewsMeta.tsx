@@ -6,17 +6,25 @@ type NewsMetaProps = {
   date?: 'full' | 'year'
 }
 
-/** Sur-titre d'un article : « Presse — Octobre 2026 ». */
+/** Sur-titre d'un article : « Presse — Octobre 2026 », ou la catégorie seule sans date connue. */
 export function NewsMeta({ article, date = 'full' }: NewsMetaProps) {
+  const label = date === 'full' ? article.dateLabel : article.year
+
   return (
     <p className="news-meta">
       <span>{articleCategories[article.category]}</span>
-      <span aria-hidden="true" className="news-meta__rule" />
-      <time
-        dateTime={date === 'full' ? article.date.slice(0, 7) : article.year}
-      >
-        {date === 'full' ? article.dateLabel : article.year}
-      </time>
+      {label && (
+        <>
+          <span aria-hidden="true" className="news-meta__rule" />
+          <time
+            dateTime={
+              date === 'full' ? article.date?.slice(0, 7) : article.year
+            }
+          >
+            {label}
+          </time>
+        </>
+      )}
     </p>
   )
 }

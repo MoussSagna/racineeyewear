@@ -32,19 +32,19 @@ export function NewsList({ articles }: NewsListProps) {
                     width={article.image.width}
                   />
                 </div>
-                <NewsMeta article={article} />
-                <h3 className="news-item__title">
-                  <Link to={`/actualites/${article.slug}`}>
-                    {article.title}
-                  </Link>
-                </h3>
-                <p className="news-item__excerpt">{article.excerpt}</p>
-                <ArrowRight
-                  aria-hidden="true"
-                  className="news-item__arrow"
-                  size={16}
-                  strokeWidth={1.5}
-                />
+                <div className="news-item__copy">
+                  <NewsMeta article={article} />
+                  <h3 className="news-item__title">
+                    <Link to={`/actualites/${article.slug}`}>
+                      {article.title}
+                    </Link>
+                  </h3>
+                  <p className="news-item__excerpt">{article.excerpt}</p>
+                  <p aria-hidden="true" className="news-item__cta">
+                    Lire l’article
+                    <ArrowRight size={16} strokeWidth={1.5} />
+                  </p>
+                </div>
               </article>
             </ScrollReveal>
           </li>

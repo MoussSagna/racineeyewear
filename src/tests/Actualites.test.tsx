@@ -13,6 +13,8 @@ import { articles } from '../data/articles'
 
 const articlePath = '/actualites/carine-beyssac-lance-racine'
 const articleTitle = 'Carine Beyssac lance RACINE, sa marque de lunettes'
+const interviewPath = '/actualites/racine-se-raconte'
+const interviewTitle = 'RACINE se raconte.'
 
 function renderRoute(path: string) {
   const router = createMemoryRouter(routes, { initialEntries: [path] })
@@ -58,10 +60,13 @@ describe('Actualités', () => {
     ).toHaveAttribute('aria-current', 'page')
   })
 
-  it('met à la une l’article de presse, sans autre article', () => {
-    const { container } = renderRoute('/actualites')
+  it('met à la une l’article de presse', () => {
+    renderRoute('/actualites')
 
-    expect(articles).toHaveLength(1)
+    expect(articles.map((article) => article.slug)).toEqual([
+      'carine-beyssac-lance-racine',
+      'racine-se-raconte',
+    ])
     const feature = screen.getByRole('region', { name: articleTitle })
     expect(within(feature).getByText('Presse')).toBeInTheDocument()
     expect(within(feature).getByText('Octobre 2026')).toBeInTheDocument()
@@ -75,7 +80,46 @@ describe('Actualités', () => {
     const links = within(feature).getAllByRole('link')
     expect(links).toHaveLength(1)
     expect(links[0]).toHaveAttribute('href', articlePath)
-    expect(container.querySelector('.news-list')).toBeNull()
+  })
+
+  it('présente l’interview dans une carte distincte, sans date', () => {
+    renderRoute('/actualites')
+
+    const list = screen.getByRole('region', { name: 'Toutes les actualités' })
+    const cards = within(list).getAllByRole('article')
+    expect(cards).toHaveLength(1)
+
+    const card = within(cards[0])
+    expect(card.getByText('Interview')).toBeInTheDocument()
+    expect(cards[0].querySelector('time')).toBeNull()
+    expect(
+      card.getByRole('img', { name: /carine beyssac/i }),
+    ).toBeInTheDocument()
+    expect(
+      card.getByText(/quelques minutes pour raconter l’histoire/i),
+    ).toBeInTheDocument()
+    expect(card.getByText('Lire l’article')).toBeInTheDocument()
+    expect(card.getByRole('link', { name: interviewTitle })).toHaveAttribute(
+      'href',
+      interviewPath,
+    )
+  })
+
+  it('mène à l’interview depuis sa carte, puis revient aux Actualités', async () => {
+    const user = userEvent.setup()
+    renderRoute('/actualites')
+
+    await user.click(screen.getByRole('link', { name: interviewTitle }))
+    expect(
+      screen.getByRole('heading', { level: 1, name: interviewTitle }),
+    ).toBeInTheDocument()
+
+    await user.click(
+      screen.getByRole('link', { name: /retour aux actualités/i }),
+    )
+    expect(
+      screen.getByRole('heading', { level: 1, name: /les histoires/i }),
+    ).toBeInTheDocument()
   })
 
   it('mène à l’article depuis la carte, puis revient aux Actualités', async () => {
@@ -115,8 +159,8 @@ describe('Article', () => {
     expect(document.title).toBe(`${articleTitle} — RACINE`)
   })
 
-  it('déroule les chapitres dans l’ordre, la vidéo au cœur du récit', () => {
-    renderRoute(articlePath)
+  it('déroule les chapitres dans l’ordre, sans vidéo', () => {
+    const { container } = renderRoute(articlePath)
 
     expect(
       screen
@@ -126,7 +170,6 @@ describe('Article', () => {
       'Une marque née à Saint-Bonnet-le-Château',
       'Des montures pensées pour les morphologies',
       'Un nom pour chaque monture',
-      'RACINE en images',
       'Une fabrication française',
       'La suite de l’aventure',
     ])
@@ -134,10 +177,56 @@ describe('Article', () => {
       screen.getByText(/commandé à Oyonnax, dans l’Ain/),
     ).toBeInTheDocument()
     expect(screen.getByText(/« Initiative Loire »/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/d’après l’article de presse d’Ève Robert/i),
+    ).toBeInTheDocument()
+    expect(container.querySelector('video')).toBeNull()
+  })
+
+  it('garde « Actualités » active dans la navigation', () => {
+    renderRoute(articlePath)
+
+    expect(
+      within(
+        screen.getByRole('navigation', { name: 'Navigation principale' }),
+      ).getByRole('link', { name: 'Actualités' }),
+    ).toHaveAttribute('aria-current', 'page')
+  })
+
+  it('renvoie vers Actualités pour un article inconnu', () => {
+    const { router } = renderRoute('/actualites/article-inexistant')
+
+    expect(router.state.location.pathname).toBe('/actualites')
+    expect(
+      screen.getByRole('heading', { level: 1, name: /les histoires/i }),
+    ).toBeInTheDocument()
+  })
+})
+
+describe('Article vidéo « RACINE se raconte. »', () => {
+  it('affiche le label Interview, le titre et le texte fourni, sans date', () => {
+    renderRoute(interviewPath)
+
+    const article = screen.getByRole('article', { name: interviewTitle })
+    expect(within(article).getByText('Interview')).toBeInTheDocument()
+    expect(article.querySelector('time')).toBeNull()
+    expect(
+      Array.from(article.querySelectorAll('.article-intro p')).map(
+        (paragraph) => paragraph.textContent,
+      ),
+    ).toEqual([
+      'Lauréate du concours Artinov pour Innovation de savoir-faire, j’ai eu l’occasion de parler de RACINE à travers une interview réalisée avec la Chambre des Métiers et de l’Artisanat.',
+      'Quelques minutes pour raconter l’histoire derrière la marque, mon parcours d’opticienne-lunetière, mais aussi ce qui m’a poussée à créer mes propres montures.',
+    ])
+    expect(article.querySelector('.news-clipping')).toBeNull()
+    expect(
+      within(article).getByRole('link', { name: /retour aux actualités/i }),
+    ).toHaveAttribute('href', '/actualites')
+    expect(document.title).toBe(`${interviewTitle} — RACINE`)
   })
 
   it('intègre la vidéo muette, avec poster et ratio natif, sans lecture automatique', () => {
-    const { container } = renderRoute(articlePath)
+    const { container } = renderRoute(interviewPath)
 
     const video = container.querySelector('video')!
     expect(video.muted).toBe(true)
@@ -152,7 +241,7 @@ describe('Article', () => {
 
   it('lit et met en pause la vidéo depuis la page, toujours sans son', async () => {
     const user = userEvent.setup()
-    const { container } = renderRoute(articlePath)
+    const { container } = renderRoute(interviewPath)
     const video = container.querySelector('video')!
     const play = vi.mocked(video.play)
     play.mockClear()
@@ -175,7 +264,7 @@ describe('Article', () => {
 
   it('passe en plein écran sans activer le son, puis redevient muette en sortant', async () => {
     const user = userEvent.setup()
-    const { container } = renderRoute(articlePath)
+    const { container } = renderRoute(interviewPath)
     const video = container.querySelector('video')!
     const requestFullscreen = vi.fn().mockResolvedValue(undefined)
     video.requestFullscreen = requestFullscreen
@@ -208,7 +297,7 @@ describe('Article', () => {
 
   it('utilise le lecteur natif d’iOS quand l’API plein écran est absente', async () => {
     const user = userEvent.setup()
-    const { container } = renderRoute(articlePath)
+    const { container } = renderRoute(interviewPath)
     const video = container.querySelector('video')! as HTMLVideoElement & {
       webkitEnterFullscreen?: () => void
     }
@@ -224,24 +313,5 @@ describe('Article', () => {
     video.muted = false
     fireEvent(video, new Event('webkitendfullscreen'))
     expect(video.muted).toBe(true)
-  })
-
-  it('garde « Actualités » active dans la navigation', () => {
-    renderRoute(articlePath)
-
-    expect(
-      within(
-        screen.getByRole('navigation', { name: 'Navigation principale' }),
-      ).getByRole('link', { name: 'Actualités' }),
-    ).toHaveAttribute('aria-current', 'page')
-  })
-
-  it('renvoie vers Actualités pour un article inconnu', () => {
-    const { router } = renderRoute('/actualites/article-inexistant')
-
-    expect(router.state.location.pathname).toBe('/actualites')
-    expect(
-      screen.getByRole('heading', { level: 1, name: /les histoires/i }),
-    ).toBeInTheDocument()
   })
 })

@@ -8,6 +8,7 @@ export const articleCategories = {
   collaboration: 'Collaboration',
   coulisses: 'Coulisses',
   portrait: 'Portrait',
+  interview: 'Interview',
   marque: 'La marque',
 } as const
 
@@ -30,7 +31,7 @@ export type ArticleImage = {
   alt: string
   width: number
   height: number
-  caption: string
+  caption?: string
   /** Publication d'origine, affichée sous le crédit. */
   publication?: string
   /** `press` : coupure de journal, montrée entière comme une archive. */
@@ -43,28 +44,29 @@ export type ArticleVideo = {
   /** Dimensions natives : le lecteur garde ce ratio, quel qu'il soit. */
   width: number
   height: number
-  heading: string
   label: string
   caption: string
-  /** `id` de la section après laquelle la vidéo s'insère. */
-  afterSection: string
 }
 
 export type Article = {
   slug: string
   category: ArticleCategory
-  /** Date ISO, sert au tri : les plus récents d'abord. */
-  date: string
+  /** Date ISO, sert au tri : les plus récents d'abord. Absente si elle n'est pas connue. */
+  date?: string
   /** Date affichée sur la carte de la page Actualités. */
-  dateLabel: string
-  year: string
+  dateLabel?: string
+  year?: string
   title: string
-  subtitle: string
+  subtitle?: string
   excerpt: string
   seoDescription: string
+  /** Image de couverture : en tête d'article, sauf si une vidéo en tient lieu. */
   image: ArticleImage
   intro: string
+  /** Paragraphes courants à la suite de l'introduction. */
+  body?: string[]
   sections: ArticleSection[]
+  /** Média principal de l'article, à la place de l'image. */
   video?: ArticleVideo
   /** Mention de source affichée en fin d'article. */
   source?: string
@@ -144,25 +146,47 @@ const allArticles: Article[] = [
         ],
       },
     ],
+    source:
+      'D’après l’article de presse d’Ève Robert, correspondante, consacré au lancement de RACINE.',
+  },
+  {
+    // Texte fourni par Carine, repris tel quel. Pas de date connue.
+    slug: 'racine-se-raconte',
+    category: 'interview',
+    title: 'RACINE se raconte.',
+    excerpt:
+      'Quelques minutes pour raconter l’histoire derrière la marque, mon parcours d’opticienne-lunetière, mais aussi ce qui m’a poussée à créer mes propres montures.',
+    seoDescription:
+      'Quelques minutes pour raconter l’histoire derrière la marque, mon parcours d’opticienne-lunetière, mais aussi ce qui m’a poussée à créer mes propres montures.',
+    image: {
+      src: artinovPoster,
+      alt: 'Carine Beyssac, souriante, lunettes RACINE sur le nez, filmée dans son atelier devant ses outils et des affiches RACINE',
+      width: 1600,
+      height: 900,
+      kind: 'photo',
+    },
+    intro:
+      'Lauréate du concours Artinov pour Innovation de savoir-faire, j’ai eu l’occasion de parler de RACINE à travers une interview réalisée avec la Chambre des Métiers et de l’Artisanat.',
+    body: [
+      'Quelques minutes pour raconter l’histoire derrière la marque, mon parcours d’opticienne-lunetière, mais aussi ce qui m’a poussée à créer mes propres montures.',
+    ],
+    sections: [],
     video: {
       src: artinovFilm,
       poster: artinovPoster,
       width: 1920,
       height: 1080,
-      heading: 'RACINE en images',
       label:
         'Film de présentation de RACINE par Carine Beyssac, sous-titré en français',
       caption:
         'Carine Beyssac présente RACINE dans son atelier. Film réalisé pour ARTINOV, le concours de l’innovation artisanale de la CMA Auvergne-Rhône-Alpes. Sous-titré en français.',
-      afterSection: 'un-nom-pour-chaque-monture',
     },
-    source:
-      'D’après l’article de presse d’Ève Robert, correspondante, consacré au lancement de RACINE.',
   },
 ]
 
+// Les articles sans date suivent les articles datés, dans l'ordre de saisie.
 export const articles = [...allArticles].sort((a, b) =>
-  b.date.localeCompare(a.date),
+  (b.date ?? '').localeCompare(a.date ?? ''),
 )
 
 export function getArticle(slug: string | undefined) {

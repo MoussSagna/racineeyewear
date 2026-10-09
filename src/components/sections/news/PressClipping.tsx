@@ -61,7 +61,7 @@ export function PressClipping({
           width={image.width}
         />
       </div>
-      {showCaption && (
+      {showCaption && image.caption && (
         <figcaption className="news-clipping__caption">
           {image.caption}
           {image.publication && (
