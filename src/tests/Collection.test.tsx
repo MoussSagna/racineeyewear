@@ -178,13 +178,15 @@ describe('Collection', () => {
     expect(text.match(/€/g)).toHaveLength(1)
   })
 
-  it('indique « À partir de 299 € » une seule fois, près des montures', () => {
+  it('indique le tarif d’entrée sous le titre du Hero, une seule fois', () => {
     const { container } = renderRoute('/collection')
 
-    const prices = container.querySelectorAll('.collection-frames__price')
-    expect(prices).toHaveLength(1)
-    expect(prices[0].textContent).toBe('Montures RACINEÀ partir de 299\u00a0€')
-    expect(prices[0].closest('.collection-frames__header')).not.toBeNull()
+    const pricing = container.querySelector('.collection-hero__pricing')
+    expect(pricing?.textContent).toBe(
+      'Des lunettes pensées pour toutes les morphologies, à partir de 299\u00a0€.',
+    )
+    expect(pricing?.closest('.collection-hero__heading')).not.toBeNull()
+    expect(container.querySelector('.collection-frames__price')).toBeNull()
   })
 
   it('marque « Collection » comme page active et pose le header sur le Hero', () => {

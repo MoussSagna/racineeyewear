@@ -327,11 +327,12 @@ export const allPower = {
 
 /**
  * Seule indication tarifaire communiquée par la marque : le point d'entrée de
- * la gamme RACINE, pas le prix d'un modèle. Espace insécable avant « € ».
+ * la gamme RACINE, pas le prix d'un modèle. Affichée sous le titre du Hero.
+ * Espace insécable avant « € ».
  */
 export const pricing = {
-  label: 'Montures RACINE',
-  from: 'À partir de 299\u00a0€',
+  lead: 'Des lunettes pensées pour toutes les morphologies,',
+  from: 'à partir de 299\u00a0€',
 }
 
 /** Chapitre mis en avant sur la page Collection. */

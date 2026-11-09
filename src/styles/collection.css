@@ -135,6 +135,25 @@
   line-height: 1.5;
 }
 
+/* Mention tarifaire : une phrase éditoriale sous le titre, le prix en italique. */
+.collection-hero__pricing {
+  max-width: 34ch;
+  margin-top: 16px;
+  color: rgb(245 232 210 / 90%);
+  font-size: 14px;
+  line-height: 1.55;
+  text-shadow: 0 0 18px rgb(23 23 17 / 55%);
+}
+
+.collection-hero__price {
+  color: var(--color-ochre);
+  font-family: var(--font-editorial);
+  font-size: 1.3em;
+  font-style: italic;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 .collection-hero__aside {
   margin-top: 20px;
 }
@@ -242,6 +261,11 @@
 
   .collection-hero__aside p {
     display: block;
+    font-size: 15px;
+  }
+
+  .collection-hero__pricing {
+    margin-top: 20px;
     font-size: 15px;
   }
 
@@ -691,26 +715,6 @@
   font-size: 16px;
   line-height: 1.75;
   row-gap: 16px;
-}
-
-/* Indication tarifaire : une ligne éditoriale discrète sous l'introduction. */
-.collection-frames__price {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  margin-top: 8px;
-  padding-top: 20px;
-  border-top: 1px solid rgb(38 53 26 / 20%);
-  gap: 6px 20px;
-}
-
-.collection-frames__price-value {
-  color: var(--color-primary);
-  font-family: var(--font-editorial);
-  font-size: clamp(22px, 1.9vw, 28px);
-  font-style: italic;
-  font-weight: 500;
-  line-height: 1.2;
 }
 
 .collection-frames__track {

@@ -1,7 +1,11 @@
 import { useRef, type MouseEvent } from 'react'
 import { ArrowDown } from 'lucide-react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { collections, featuredChapter } from '../../../data/collections'
+import {
+  collections,
+  featuredChapter,
+  pricing,
+} from '../../../data/collections'
 import { easeOutSoft } from '../../../lib/motion'
 
 const titleLines = ['ALL', 'POWER.'] as const
@@ -107,6 +111,15 @@ export function CollectionHero() {
               Chapter {chapter}
             </motion.span>
           </h1>
+          <motion.p
+            animate={{ opacity: 1, y: 0 }}
+            className="collection-hero__pricing"
+            initial={animate ? { opacity: 0, y: 8 } : false}
+            transition={{ duration: 0.6, delay: 1.05, ease: easeOutSoft }}
+          >
+            {pricing.lead}{' '}
+            <span className="collection-hero__price">{pricing.from}</span>.
+          </motion.p>
         </div>
 
         <motion.div
