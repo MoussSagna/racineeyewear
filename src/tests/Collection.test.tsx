@@ -173,9 +173,18 @@ describe('Collection', () => {
     const { container } = renderRoute('/collection')
 
     const text = container.querySelector('.collection-page')!.textContent ?? ''
-    expect(text).not.toMatch(
-      /acheter|panier|ajouter|prix|€|boutique|commander/i,
-    )
+    expect(text).not.toMatch(/acheter|panier|ajouter|prix|boutique|commander/i)
+    // Seule indication tarifaire : le point d'entrée de la gamme.
+    expect(text.match(/€/g)).toHaveLength(1)
+  })
+
+  it('indique « À partir de 299 € » une seule fois, près des montures', () => {
+    const { container } = renderRoute('/collection')
+
+    const prices = container.querySelectorAll('.collection-frames__price')
+    expect(prices).toHaveLength(1)
+    expect(prices[0].textContent).toBe('Montures RACINEÀ partir de 299\u00a0€')
+    expect(prices[0].closest('.collection-frames__header')).not.toBeNull()
   })
 
   it('marque « Collection » comme page active et pose le header sur le Hero', () => {

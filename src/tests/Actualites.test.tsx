@@ -15,6 +15,16 @@ const articlePath = '/actualites/carine-beyssac-lance-racine'
 const articleTitle = 'Carine Beyssac lance RACINE, sa marque de lunettes'
 const interviewPath = '/actualites/racine-se-raconte'
 const interviewTitle = 'RACINE se raconte.'
+const tl7Path = '/actualites/racine-sur-tl7'
+const tl7Title = 'RACINE sur TL7, la chaîne TV locale de Saint-Etienne'
+const radioPath = '/actualites/racine-sur-ici-saint-etienne-loire'
+const radioTitle = 'RACINE à l’honneur sur ICI Saint-Étienne Loire'
+
+function expectExternal(link: HTMLElement, href: string) {
+  expect(link).toHaveAttribute('href', href)
+  expect(link).toHaveAttribute('target', '_blank')
+  expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+}
 
 function renderRoute(path: string) {
   const router = createMemoryRouter(routes, { initialEntries: [path] })
@@ -60,49 +70,78 @@ describe('Actualités', () => {
     ).toHaveAttribute('aria-current', 'page')
   })
 
-  it('met à la une l’article de presse', () => {
-    renderRoute('/actualites')
-
+  it('classe les actualités de la plus récente à la plus ancienne', () => {
     expect(articles.map((article) => article.slug)).toEqual([
+      'racine-sur-tl7',
+      'racine-sur-ici-saint-etienne-loire',
       'carine-beyssac-lance-racine',
       'racine-se-raconte',
     ])
-    const feature = screen.getByRole('region', { name: articleTitle })
-    expect(within(feature).getByText('Presse')).toBeInTheDocument()
-    expect(within(feature).getByText('Octobre 2026')).toBeInTheDocument()
+  })
+
+  it('met à la une le passage sur TL7', () => {
+    renderRoute('/actualites')
+
+    const feature = screen.getByRole('region', { name: tl7Title })
+    expect(within(feature).getByText('Télévision')).toBeInTheDocument()
+    expect(within(feature).getByText('TL7')).toBeInTheDocument()
+    expect(within(feature).getByText('30 octobre 2026')).toHaveAttribute(
+      'datetime',
+      '2026-10-30',
+    )
     expect(
-      within(feature).getByText(/depuis son atelier de création/i),
+      within(feature).getByRole('img', { name: /dans son atelier/i }),
     ).toBeInTheDocument()
     expect(
-      within(feature).getByRole('img', { name: /coupure de presse/i }),
+      within(feature).getByText('Découvrir le reportage'),
     ).toBeInTheDocument()
 
     const links = within(feature).getAllByRole('link')
     expect(links).toHaveLength(1)
-    expect(links[0]).toHaveAttribute('href', articlePath)
+    expect(links[0]).toHaveAttribute('href', tl7Path)
   })
 
-  it('présente l’interview dans une carte distincte, sans date', () => {
+  it('liste la radio, la presse et l’interview à la suite', () => {
     renderRoute('/actualites')
 
     const list = screen.getByRole('region', { name: 'Toutes les actualités' })
     const cards = within(list).getAllByRole('article')
-    expect(cards).toHaveLength(1)
+    expect(cards).toHaveLength(3)
 
-    const card = within(cards[0])
-    expect(card.getByText('Interview')).toBeInTheDocument()
-    expect(cards[0].querySelector('time')).toBeNull()
-    expect(
-      card.getByRole('img', { name: /carine beyssac/i }),
-    ).toBeInTheDocument()
-    expect(
-      card.getByText(/quelques minutes pour raconter l’histoire/i),
-    ).toBeInTheDocument()
-    expect(card.getByText('Lire l’article')).toBeInTheDocument()
-    expect(card.getByRole('link', { name: interviewTitle })).toHaveAttribute(
+    const radio = within(cards[0])
+    expect(radio.getByText('Radio')).toBeInTheDocument()
+    expect(radio.getByText('ICI Saint-Étienne Loire')).toBeInTheDocument()
+    expect(radio.getByText('15 octobre 2026')).toBeInTheDocument()
+    expect(radio.getByText('Découvrir l’émission')).toBeInTheDocument()
+    expect(radio.getByRole('link', { name: radioTitle })).toHaveAttribute(
       'href',
-      interviewPath,
+      radioPath,
     )
+
+    const press = within(cards[1])
+    expect(press.getByText('Presse')).toBeInTheDocument()
+    expect(press.getByText('Octobre 2026')).toHaveAttribute(
+      'datetime',
+      '2026-10',
+    )
+    expect(press.getByRole('link', { name: articleTitle })).toHaveAttribute(
+      'href',
+      articlePath,
+    )
+
+    const interview = within(cards[2])
+    expect(interview.getByText('Interview')).toBeInTheDocument()
+    expect(cards[2].querySelector('time')).toBeNull()
+    expect(
+      interview.getByRole('img', { name: /carine beyssac/i }),
+    ).toBeInTheDocument()
+    expect(
+      interview.getByText(/quelques minutes pour raconter l’histoire/i),
+    ).toBeInTheDocument()
+    expect(interview.getByText('Lire l’article')).toBeInTheDocument()
+    expect(
+      interview.getByRole('link', { name: interviewTitle }),
+    ).toHaveAttribute('href', interviewPath)
   })
 
   it('mène à l’interview depuis sa carte, puis revient aux Actualités', async () => {
@@ -137,6 +176,75 @@ describe('Actualités', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: /les histoires/i }),
     ).toBeInTheDocument()
+  })
+})
+
+describe('Passages dans les médias', () => {
+  it('présente l’émission de radio et le lien pour l’écouter', () => {
+    renderRoute(radioPath)
+
+    const article = screen.getByRole('article', { name: radioTitle })
+    expect(within(article).getByText('Radio')).toBeInTheDocument()
+    expect(
+      within(article).getByRole('img', { name: /trophée ARTINOV/i }),
+    ).toBeInTheDocument()
+    expect(
+      within(article).getAllByText(/dans l’émission Ici ça marche/i).length,
+    ).toBeGreaterThan(0)
+
+    const coverage = within(article).getByRole('region', { name: 'L’émission' })
+    expect(within(coverage).getByText('Ici ça marche')).toBeInTheDocument()
+    expect(
+      within(coverage).getByText(/une épicerie solidaire pour les étudiants/i),
+    ).toBeInTheDocument()
+    expect(within(coverage).getByText('15 octobre 2026')).toBeInTheDocument()
+
+    const links = within(coverage).getAllByRole('link')
+    expect(links).toHaveLength(1)
+    expect(links[0]).toHaveAccessibleName('Écouter l’émission (nouvel onglet)')
+    expectExternal(
+      links[0],
+      'https://www.ici.fr/emissions/l-eco-d-ici/saint-etienne-loire?page=2',
+    )
+    expect(document.title).toBe(`${radioTitle} — RACINE`)
+  })
+
+  it('présente le reportage TL7, l’article et les publications de la chaîne', () => {
+    renderRoute(tl7Path)
+
+    const article = screen.getByRole('article', { name: tl7Title })
+    expect(within(article).getByText('Télévision')).toBeInTheDocument()
+    expect(within(article).getByText(/prix Artinov/)).toBeInTheDocument()
+
+    const coverage = within(article).getByRole('region', {
+      name: 'Le reportage',
+    })
+    for (const [name, href] of [
+      [
+        'Lire l’article',
+        'https://www.tl7.fr/actualites-loire/actualite/actualite_1/saint-bonnet-le-chateau-elle-recoit-un-prix-pour-ses-lunettes-plus-inclusive_15297.html',
+      ],
+      ['Voir sur Facebook', 'https://www.facebook.com/share/v/1JDFvvr87d/'],
+      ['Voir sur TikTok', 'https://vm.tiktok.com/ZGdXUqrke/'],
+      ['Voir sur Instagram', 'https://www.instagram.com/reel/DfIIUtXg3J7/'],
+    ]) {
+      expectExternal(
+        within(coverage).getByRole('link', { name: `${name} (nouvel onglet)` }),
+        href,
+      )
+    }
+    expect(within(coverage).getAllByRole('link')).toHaveLength(4)
+  })
+
+  it('garde une hiérarchie de titres simple : un h1, puis le bloc média en h2', () => {
+    renderRoute(radioPath)
+
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+    expect(
+      screen
+        .getAllByRole('heading', { level: 2 })
+        .map((heading) => heading.textContent),
+    ).toEqual(['L’émission'])
   })
 })
 

@@ -415,6 +415,19 @@ button:focus-visible {
   font-size: 15px;
 }
 
+/* Texte réservé aux lecteurs d'écran. */
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* Footer */
 
 .site-footer {
@@ -472,10 +485,18 @@ button:focus-visible {
   letter-spacing: 0.04em;
 }
 
+/* Quatre réseaux : deux par ligne quand la place manque, sur une seule ligne sinon. */
 .footer-socials {
-  display: flex;
-  gap: 12px;
+  display: grid;
+  gap: 4px 12px;
+  grid-template-columns: repeat(2, max-content);
   margin-left: -12px;
+}
+
+@media (min-width: 560px) and (max-width: 899px) {
+  .footer-socials {
+    grid-template-columns: repeat(4, max-content);
+  }
 }
 
 .footer-socials a {
@@ -571,7 +592,7 @@ button:focus-visible {
   }
 
   .footer-socials {
-    justify-content: flex-end;
+    justify-content: end;
     margin: 0 -12px 0 0;
   }
 

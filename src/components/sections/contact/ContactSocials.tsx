@@ -34,6 +34,7 @@ export function ContactSocials() {
               >
                 <SocialIcon id={social.id} size={32} />
                 <span className="contact-socials__name">{social.name}</span>
+                {/* Colonne gardée vide sans identifiant : la flèche reste alignée. */}
                 <span className="contact-socials__handle">{social.handle}</span>
                 <ArrowUpRight
                   aria-hidden="true"

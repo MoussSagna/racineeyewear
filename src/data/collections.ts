@@ -325,6 +325,15 @@ export const allPower = {
   ] satisfies Chapter[],
 }
 
+/**
+ * Seule indication tarifaire communiquée par la marque : le point d'entrée de
+ * la gamme RACINE, pas le prix d'un modèle. Espace insécable avant « € ».
+ */
+export const pricing = {
+  label: 'Montures RACINE',
+  from: 'À partir de 299\u00a0€',
+}
+
 /** Chapitre mis en avant sur la page Collection. */
 export const featuredChapter = allPowerChapter01
 

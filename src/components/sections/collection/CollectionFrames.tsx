@@ -6,7 +6,7 @@ import {
   useTransform,
   type MotionValue,
 } from 'motion/react'
-import { featuredChapter, type Frame } from '../../../data/collections'
+import { featuredChapter, pricing, type Frame } from '../../../data/collections'
 import { cn } from '../../../lib/utils'
 import { ScrollReveal } from '../../ui/ScrollReveal'
 import { CollectionPhoto } from './CollectionPhoto'
@@ -116,6 +116,14 @@ export function CollectionFrames() {
               <p>{paragraph}</p>
             </ScrollReveal>
           ))}
+          <ScrollReveal delay={0.1 + intro.length * 0.1}>
+            <p className="collection-frames__price">
+              <span className="collection-label">{pricing.label}</span>
+              <span className="collection-frames__price-value">
+                {pricing.from}
+              </span>
+            </p>
+          </ScrollReveal>
         </div>
       </div>
 

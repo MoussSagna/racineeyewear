@@ -1,6 +1,9 @@
 import pressClipping from '../assets/images/actualites/presse-carine-beyssac-lance-racine.jpg'
+import radioPortrait from '../assets/images/actualites/racine-ici-saint-etienne-loire.jpg'
 import artinovPoster from '../assets/images/actualites/racine-artinov-poster.jpg'
+import workshopPortrait from '../assets/images/contact/atelier-carine.jpg'
 import artinovFilm from '../assets/video/racine-artinov.mp4'
+import type { SocialId } from './contact'
 
 export const articleCategories = {
   presse: 'Presse',
@@ -10,6 +13,8 @@ export const articleCategories = {
   portrait: 'Portrait',
   interview: 'Interview',
   marque: 'La marque',
+  radio: 'Radio',
+  television: 'Télévision',
 } as const
 
 export type ArticleCategory = keyof typeof articleCategories
@@ -48,10 +53,33 @@ export type ArticleVideo = {
   caption: string
 }
 
+/** Lien vers le contenu d'un média, ouvert dans un nouvel onglet. */
+export type ArticleLink = {
+  /** Texte du lien, explicite : « Écouter l’émission », « Voir sur TikTok »… */
+  label: string
+  url: string
+  icon: 'listen' | 'read' | Exclude<SocialId, 'linkedin'>
+}
+
+/** Passage de RACINE dans un média : radio, télévision… */
+export type ArticleCoverage = {
+  /** Nom du média, affiché sur les cartes et en tête d'article. */
+  media: string
+  /** Titre du bloc dans l'article : « L’émission », « Le reportage »… */
+  title: string
+  /** Fiche affichée dans l'article : média, émission, date… */
+  facts: { label: string; value: string }[]
+  /** Le premier lien est l'action principale. */
+  links: ArticleLink[]
+}
+
 export type Article = {
   slug: string
   category: ArticleCategory
-  /** Date ISO, sert au tri : les plus récents d'abord. Absente si elle n'est pas connue. */
+  /**
+   * Date ISO (`2026-10-15`, ou `2026-10` si le jour n'est pas connu), sert au
+   * tri : les plus récents d'abord. Absente si elle n'est pas connue.
+   */
   date?: string
   /** Date affichée sur la carte de la page Actualités. */
   dateLabel?: string
@@ -70,6 +98,10 @@ export type Article = {
   video?: ArticleVideo
   /** Mention de source affichée en fin d'article. */
   source?: string
+  /** Passage dans un média : sa fiche et les liens pour l'écouter ou le voir. */
+  coverage?: ArticleCoverage
+  /** Texte de l'invitation sur les cartes. Par défaut : « Lire l’article ». */
+  cardCta?: string
 }
 
 /**
@@ -78,10 +110,121 @@ export type Article = {
  */
 const allArticles: Article[] = [
   {
+    // Informations vérifiées sur tl7.fr (article du 30 octobre 2026).
+    slug: 'racine-sur-tl7',
+    category: 'television',
+    date: '2026-10-30',
+    dateLabel: '30 octobre 2026',
+    year: '2026',
+    title: 'RACINE sur TL7, la chaîne TV locale de Saint-Etienne',
+    excerpt:
+      'TL7 met en lumière RACINE et Carine Beyssac, récompensée par le prix Artinov pour ses lunettes pensées pour la diversité des morphologies.',
+    seoDescription:
+      'RACINE sur TL7 : la chaîne de télévision locale de Saint-Étienne présente Carine Beyssac et ses lunettes pensées pour la diversité des morphologies.',
+    image: {
+      src: workshopPortrait,
+      alt: 'Carine Beyssac, créatrice de RACINE, souriante, lunettes sur le nez, assise dans son atelier devant son établi',
+      width: 1560,
+      height: 1900,
+      kind: 'photo',
+    },
+    intro:
+      'TL7, la chaîne de télévision locale de Saint-Étienne, met en lumière RACINE et Carine Beyssac, lauréate du prix Artinov dans la catégorie « Innovation de savoir-faire ».',
+    body: [
+      'Au programme : des montures pensées pour valoriser la diversité morphologique des visages, et leur fabrication à l’atelier de Saint-Bonnet-le-Château.',
+      'L’article est à lire sur le site de TL7, et le reportage à retrouver sur les réseaux sociaux de la chaîne.',
+    ],
+    sections: [],
+    coverage: {
+      media: 'TL7',
+      title: 'Le reportage',
+      facts: [
+        { label: 'Média', value: 'TL7, Télévision Loire 7' },
+        {
+          label: 'Article',
+          value:
+            '« Saint-Bonnet-le-Château : Elle reçoit un prix pour ses lunettes plus inclusive »',
+        },
+        { label: 'Publication', value: '30 octobre 2026' },
+      ],
+      links: [
+        {
+          label: 'Lire l’article',
+          url: 'https://www.tl7.fr/actualites-loire/actualite/actualite_1/saint-bonnet-le-chateau-elle-recoit-un-prix-pour-ses-lunettes-plus-inclusive_15297.html',
+          icon: 'read',
+        },
+        {
+          label: 'Voir sur Facebook',
+          url: 'https://www.facebook.com/share/v/1JDFvvr87d/',
+          icon: 'facebook',
+        },
+        {
+          label: 'Voir sur TikTok',
+          url: 'https://vm.tiktok.com/ZGdXUqrke/',
+          icon: 'tiktok',
+        },
+        {
+          label: 'Voir sur Instagram',
+          url: 'https://www.instagram.com/reel/DfIIUtXg3J7/',
+          icon: 'instagram',
+        },
+      ],
+    },
+    cardCta: 'Découvrir le reportage',
+    source:
+      'D’après l’article de Thibault Rivière, journaliste, publié sur tl7.fr le 30 octobre 2026.',
+  },
+  {
+    // Texte fourni par Carine, repris tel quel. Épisode vérifié sur ici.fr.
+    slug: 'racine-sur-ici-saint-etienne-loire',
+    category: 'radio',
+    date: '2026-10-15',
+    dateLabel: '15 octobre 2026',
+    year: '2026',
+    title: 'RACINE à l’honneur sur ICI Saint-Étienne Loire',
+    excerpt:
+      'RACINE à l’honneur sur ici Saint-Etienne Loire dans l’émission Ici ça marche, qui met en lumière les projets et initiatives du département.',
+    seoDescription:
+      'RACINE à l’honneur sur ICI Saint-Étienne Loire dans l’émission Ici ça marche, qui met en lumière les projets et initiatives du département.',
+    image: {
+      src: radioPortrait,
+      alt: 'Carine Beyssac souriante à son bureau, lunettes RACINE sur le nez, entourée d’une machine de fabrication, d’un ordinateur affichant le dessin d’une monture, d’un présentoir de lunettes et du trophée ARTINOV',
+      width: 1146,
+      height: 845,
+      kind: 'photo',
+    },
+    intro:
+      'RACINE à l’honneur sur ici Saint-Etienne Loire dans l’émission Ici ça marche, qui met en lumière les projets et initiatives du département.',
+    sections: [],
+    coverage: {
+      media: 'ICI Saint-Étienne Loire',
+      title: 'L’émission',
+      facts: [
+        { label: 'Média', value: 'ICI Saint-Étienne Loire' },
+        { label: 'Émission', value: 'Ici ça marche' },
+        {
+          label: 'Épisode',
+          value:
+            '« Une épicerie solidaire pour les étudiants et des lunettes repensées pour toutes les morphologies »',
+        },
+        { label: 'Diffusion', value: '15 octobre 2026' },
+      ],
+      links: [
+        {
+          label: 'Écouter l’émission',
+          url: 'https://www.ici.fr/emissions/l-eco-d-ici/saint-etienne-loire?page=2',
+          icon: 'listen',
+        },
+      ],
+    },
+    cardCta: 'Découvrir l’émission',
+  },
+  {
     // Contenu repris de la coupure de presse `assets/article.jpeg`.
     slug: 'carine-beyssac-lance-racine',
     category: 'presse',
-    date: '2026-10-01',
+    // Jour de parution inconnu : le mois seul.
+    date: '2026-10',
     dateLabel: 'Octobre 2026',
     year: '2026',
     title: 'Carine Beyssac lance RACINE, sa marque de lunettes',

@@ -693,6 +693,26 @@
   row-gap: 16px;
 }
 
+/* Indication tarifaire : une ligne éditoriale discrète sous l'introduction. */
+.collection-frames__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid rgb(38 53 26 / 20%);
+  gap: 6px 20px;
+}
+
+.collection-frames__price-value {
+  color: var(--color-primary);
+  font-family: var(--font-editorial);
+  font-size: clamp(22px, 1.9vw, 28px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
 .collection-frames__track {
   display: flex;
   padding: 4px var(--gutter) 24px;

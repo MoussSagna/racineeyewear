@@ -177,9 +177,10 @@ export function PrivacyPolicy() {
           cette occasion, votre navigateur communique votre adresse IP à Google.
         </p>
         <p>
-          Les liens vers Instagram et LinkedIn sont de simples liens : aucune
-          donnée n’est transmise à ces services tant que vous ne cliquez pas
-          dessus.
+          Les liens vers Instagram, TikTok, Facebook et LinkedIn, comme les
+          liens vers les médias cités dans les Actualités, sont de simples liens
+          : aucune donnée n’est transmise à ces services tant que vous ne
+          cliquez pas dessus.
         </p>
       </LegalSection>
 

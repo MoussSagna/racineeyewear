@@ -36,7 +36,7 @@ export function NewsFeature({ article }: NewsFeatureProps) {
           </ScrollReveal>
           <ScrollReveal delay={0.24}>
             <p aria-hidden="true" className="news-feature__cta">
-              Lire l’article
+              {article.cardCta ?? 'Lire l’article'}
               <ArrowRight size={16} strokeWidth={1.5} />
             </p>
           </ScrollReveal>

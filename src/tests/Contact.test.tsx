@@ -110,7 +110,7 @@ describe('Contact', () => {
     ])
   })
 
-  it('affiche Instagram et LinkedIn avec leurs icônes dans la page', () => {
+  it('affiche Instagram, TikTok, Facebook et LinkedIn avec leurs icônes dans la page', () => {
     renderRoute('/contact')
 
     const section = screen.getByRole('region', {
@@ -118,6 +118,8 @@ describe('Contact', () => {
     })
     for (const [name, href] of [
       ['Instagram RACINE', 'https://www.instagram.com/racineeyewear/'],
+      ['TikTok RACINE', 'https://www.tiktok.com/@racineeyewear'],
+      ['Facebook RACINE', 'https://www.facebook.com/share/14uqZaUr4uq/'],
       [
         'LinkedIn RACINE',
         'https://www.linkedin.com/in/carine-beyssac-a87362146/',
@@ -129,7 +131,7 @@ describe('Contact', () => {
       expect(link).toHaveAttribute('rel', 'noopener noreferrer')
       expect(link.querySelector('svg.social-icon')).not.toBeNull()
     }
-    expect(within(section).getAllByRole('link')).toHaveLength(2)
+    expect(within(section).getAllByRole('link')).toHaveLength(4)
   })
 
   it('termine sur la signature finale, sans section manifeste', () => {

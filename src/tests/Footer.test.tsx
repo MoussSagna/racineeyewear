@@ -48,10 +48,12 @@ describe('Footer', () => {
     renderFooter()
 
     const socials = screen.getByRole('list', { name: 'Réseaux sociaux' })
-    expect(within(socials).getAllByRole('link')).toHaveLength(2)
+    expect(within(socials).getAllByRole('link')).toHaveLength(4)
 
     for (const [name, href] of [
       ['Instagram RACINE', 'https://www.instagram.com/racineeyewear/'],
+      ['TikTok RACINE', 'https://www.tiktok.com/@racineeyewear'],
+      ['Facebook RACINE', 'https://www.facebook.com/share/14uqZaUr4uq/'],
       [
         'LinkedIn RACINE',
         'https://www.linkedin.com/in/carine-beyssac-a87362146/',

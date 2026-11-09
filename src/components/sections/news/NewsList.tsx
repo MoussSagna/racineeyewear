@@ -41,7 +41,7 @@ export function NewsList({ articles }: NewsListProps) {
                   </h3>
                   <p className="news-item__excerpt">{article.excerpt}</p>
                   <p aria-hidden="true" className="news-item__cta">
-                    Lire l’article
+                    {article.cardCta ?? 'Lire l’article'}
                     <ArrowRight size={16} strokeWidth={1.5} />
                   </p>
                 </div>

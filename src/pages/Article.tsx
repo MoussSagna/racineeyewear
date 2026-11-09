@@ -1,5 +1,6 @@
 import { ArrowLeft } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { ArticleCoverage } from '../components/sections/news/ArticleCoverage'
 import { ArticleHero } from '../components/sections/news/ArticleHero'
 import { ArticleSections } from '../components/sections/news/ArticleSections'
 import { ScrollReveal } from '../components/ui/ScrollReveal'
@@ -29,6 +30,8 @@ export function Article() {
           </ScrollReveal>
         ))}
       </div>
+
+      {article.coverage && <ArticleCoverage coverage={article.coverage} />}
 
       <ArticleSections sections={article.sections} startIndex={0} />
 
